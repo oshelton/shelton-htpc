@@ -1,5 +1,5 @@
-Shelton HTPC Project
-Copyright 2017
+Shelton HTPC Project  
+Copyright 2017  
 Jack Owen Shelton
 
 This project is meant to serve as a somewhat flexible HTPC frontend software for my family's needs.
