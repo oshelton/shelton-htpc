@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestApps", "TestApps", "{F74A2800-EB90-4608-90F0-F6F7EC481AD2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurator", "Configurator", "{0E0E7480-DCE3-4E48-83E9-5247567FAD93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{F5F416A9-E756-477B-91BF-AD569CEB2A8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shelton HTPC Configurator", "Configurator\Shelton-HTPC Configurator\Shelton HTPC Configurator.csproj", "{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shelton HTPC", "Frontend\Shelton HTPC\untitled.vcxproj", "{13020CFD-ABA1-3040-A1B9-1E889F5917AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}.Debug|x64.Build.0 = Debug|Any CPU
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}.Release|x64.ActiveCfg = Release|Any CPU
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8}.Release|x64.Build.0 = Release|Any CPU
+		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Debug|x64.ActiveCfg = Debug|x64
+		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Debug|x64.Build.0 = Debug|x64
+		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Release|Any CPU.ActiveCfg = Release|x64
+		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Release|x64.ActiveCfg = Release|x64
+		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8} = {0E0E7480-DCE3-4E48-83E9-5247567FAD93}
+		{13020CFD-ABA1-3040-A1B9-1E889F5917AA} = {F5F416A9-E756-477B-91BF-AD569CEB2A8F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27E9DCD8-9D3C-4823-B722-C27A355F4F7A}
+	EndGlobalSection
+EndGlobal

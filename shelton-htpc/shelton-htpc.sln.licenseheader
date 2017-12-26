@@ -1,0 +1,16 @@
+extensions: designer.cs 
+extensions: generated.cs
+extensions: cs 
+extensions: xaml.cs 
+extensions: cpp 
+extensions: h
+extensions: qml
+//Copyright (c) 2017 Owen Shelton
+//Licensed under the MIT license.
+//See License file for licensing details.
+extensions: xaml
+<!--
+Copyright (c) 2017 Owen Shelton
+Licensed under the MIT license.
+See License file for licensing details.
+-->
