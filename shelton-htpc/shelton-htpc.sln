@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shelton HTPC Configurator",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shelton HTPC", "Frontend\Shelton HTPC\untitled.vcxproj", "{13020CFD-ABA1-3040-A1B9-1E889F5917AA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QtJSON", "TestApps\QtJSON\QtJSON.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,12 @@ Global
 		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Release|Any CPU.ActiveCfg = Release|x64
 		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Release|x64.ActiveCfg = Release|x64
 		{13020CFD-ABA1-3040-A1B9-1E889F5917AA}.Release|x64.Build.0 = Release|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.ActiveCfg = Debug|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.Build.0 = Debug|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Any CPU.ActiveCfg = Release|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.ActiveCfg = Release|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +50,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CBEE048C-8BAC-47D9-802A-871F58C5A0A8} = {0E0E7480-DCE3-4E48-83E9-5247567FAD93}
 		{13020CFD-ABA1-3040-A1B9-1E889F5917AA} = {F5F416A9-E756-477B-91BF-AD569CEB2A8F}
+		{B12702AD-ABFB-343A-A199-8E24837244A3} = {F74A2800-EB90-4608-90F0-F6F7EC481AD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27E9DCD8-9D3C-4823-B722-C27A355F4F7A}
