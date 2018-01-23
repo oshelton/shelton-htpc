@@ -9,10 +9,82 @@ See License file for licensing details.
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:pages="clr-namespace:SheltonHTPC.ConfigPages"
         xmlns:local="clr-namespace:Shelton_HTPC_Configurator"
+        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Shelton HTPC Configurator" Height="768" Width="1024"
+        Background="{x:Static SystemColors.ControlDarkBrush}">
+    <TabControl Margin="10" TabStripPlacement="Left">
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="General"/>
+                    <icons:PackIconMaterial Kind="Settings"  HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem.Header>
+            
+            <pages:General/>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Scenes"/>
+                    <icons:PackIconMaterial Kind="Grid" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem.Header>
+            
+            <pages:Scenes/>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Movies"/>
+                    <icons:PackIconMaterial Kind="Movie" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem.Header>
+            
+            <pages:Movies/>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="TV Series"/>
+                    <icons:PackIconMaterial Kind="Television" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem.Header>
+            
+            <pages:TVSeries/>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Music"/>
+                    <icons:PackIconMaterial Kind="Music" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem.Header>
+            
+            <pages:Music/>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Other Media"/>
+                    <icons:PackIconMaterial Kind="Drawing" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem.Header>
+            
+            <pages:OtherMedia/>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Games"/>
+                    <icons:PackIconMaterial Kind="Gamepad" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem.Header>
+            
+            <pages:Games/>
+        </TabItem>
+    </TabControl>
 </Window>
