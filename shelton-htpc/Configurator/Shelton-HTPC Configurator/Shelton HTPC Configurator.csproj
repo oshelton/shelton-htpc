@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro.IconPacks.Material, Version=2.0.0.31, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.Metro.IconPacks.Material.2.0.0\lib\net46\MahApps.Metro.IconPacks.Material.dll</HintPath>
@@ -153,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

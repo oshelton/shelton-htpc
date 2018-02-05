@@ -13,6 +13,7 @@ See License file for licensing details.
         xmlns:local="clr-namespace:Shelton_HTPC_Configurator"
         xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
+        Icon="pack://application:,,,/AppIcon.ico"
         Title="Shelton HTPC Configurator" Height="768" Width="1024"
         Background="{x:Static SystemColors.ControlDarkBrush}">
     <TabControl Margin="10" TabStripPlacement="Left">
