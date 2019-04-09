@@ -47,6 +47,9 @@ namespace SheltonHTPC.Data.Entities
                             results.EnablePhotos = (bool)jsonObj[nameof(EnablePhotos)];
                             results.EnableGames = (bool)jsonObj[nameof(EnableGames)];
                             results.EnableWebAccess = (bool)jsonObj[nameof(EnableWebAccess)];
+                            results.EnableApplications = (bool)jsonObj[nameof(EnableApplications)];
+                            results.EnableWebSites = (bool)jsonObj[nameof(EnableWebSites)];
+                            results.EnableWidgets = (bool)jsonObj[nameof(EnableWidgets)];
                         }
                     }
                     else
@@ -86,6 +89,9 @@ namespace SheltonHTPC.Data.Entities
             jsonRoot[nameof(EnablePhotos)] = EnablePhotos;
             jsonRoot[nameof(EnableGames)] = EnableGames;
             jsonRoot[nameof(EnableWebAccess)] = EnableWebAccess;
+            jsonRoot[nameof(EnableApplications)] = EnableApplications;
+            jsonRoot[nameof(EnableWebSites)] = EnableWebSites;
+            jsonRoot[nameof(EnableWidgets)] = EnableWidgets;
 
             using (StreamWriter file = File.CreateText(settingsFilePath))
             using (JsonTextWriter writer = new JsonTextWriter(file))
@@ -182,6 +188,36 @@ namespace SheltonHTPC.Data.Entities
             get => _EnableWebAccess;
             set => SetPropertyBackingValue(value, ref _EnableWebAccess);
         }
+
+        private bool _EnableApplications = true;
+        /// <summary>
+        /// Whether or not launching applications is enabled;
+        /// </summary>
+        public bool EnableApplications
+        {
+            get => _EnableApplications;
+            set => SetPropertyBackingValue(value, ref _EnableApplications);
+        }
+
+        private bool _EnableWebSites = true;
+        /// <summary>
+        /// Whether or not launching web sites is enabled.
+        /// </summary>
+        public bool EnableWebSites
+        {
+            get => _EnableWebSites;
+            set => SetPropertyBackingValue(value, ref _EnableWebSites);
+        }
+
+        private bool _EnableWidgets = true;
+        /// <summary>
+        /// Whether or not widgets (calendar, weather, etc) are enabled.
+        /// </summary>
+        public bool EnableWidgets
+        {
+            get => _EnableWidgets;
+            set => SetPropertyBackingValue(value, ref _EnableWidgets);
+        }
         #endregion
 
         public GeneralSettings Duplicate()
@@ -197,6 +233,9 @@ namespace SheltonHTPC.Data.Entities
                 _EnablePhotos = this.EnablePhotos,
                 _EnableGames = this.EnableGames,
                 _EnableWebAccess = this.EnableWebAccess,
+                _EnableApplications = this.EnableApplications,
+                _EnableWebSites = this.EnableWebSites,
+                _EnableWidgets = this.EnableWidgets,
             };
         }
     }

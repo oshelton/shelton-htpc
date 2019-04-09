@@ -1,0 +1,213 @@
+﻿<controls:MetroWindow x:Class="SheltonHTPC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SheltonHTPCConfigurator"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
+        mc:Ignorable="d"
+        Title="Shelton HTPC Configurator" 
+        Height="480" 
+        MinHeight="470"
+        Width="800"
+        TitleCaps="False"
+        DataContext="{Binding Model, RelativeSource={RelativeSource Self}}"              
+        Loaded="MetroWindow_Loaded">
+    <Grid>
+        <DockPanel IsEnabled="{Binding IsInitializing, Converter={x:Static converters:CommonConverters.InvertBoolean}}">
+            <StackPanel DockPanel.Dock="Left">
+                <ToggleButton
+                    Name="GeneralSettingsButton"
+                    Margin="4,4,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Home/General Settings">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="HomeSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="LayoutButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Scenes and Layouts">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="SitemapSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="MoviesButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Movies">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="VideoSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="SeriesButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="TV Series">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="TvSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="MusicButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Music">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="MusicSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="PhotosButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Photos">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="ImageRegular" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="GamesButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Games">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="GamepadSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="ApplicationsButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="TV Series">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="LaptopSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="WebSitesButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Web Sites">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="InternetExplorerBrands" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="WidgetsButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Widgets">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="CogSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
+                <ToggleButton
+                    Name="WebAccessButton"
+                    Margin="4,2,4,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+                    ToolTip="Server/Web Access">
+                    <ToggleButton.Content>
+                        <iconPacks:PackIconFontAwesome 
+                            Kind="ServerSolid" 
+                            HorizontalAlignment="Center"
+                            Margin="8"
+                            Width="18"
+                            Height="18"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+            </StackPanel>
+
+            <ContentControl/>
+        </DockPanel>
+
+        <Rectangle
+            Fill="White"
+            Opacity="0.8"
+            Visibility="{Binding IsInitializing, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"/>
+
+        <StackPanel
+            VerticalAlignment="Center"
+            Visibility="{Binding IsInitializing, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}">
+            <controls:ProgressRing IsActive="{Binding IsInitializing}"/>
+            <Label HorizontalAlignment="Center">Loading...</Label>
+        </StackPanel>
+    </Grid>
+</controls:MetroWindow>
