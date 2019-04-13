@@ -44,6 +44,7 @@
   <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="2.3.0" />
+    <PackageReference Include="ReactiveUI.WPF" Version="9.12.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +55,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\pfz.animationmanagement\Pfz.AnimationManagement.Wpf\Pfz.AnimationManagement.Wpf.csproj" />
+    <ProjectReference Include="..\..\pfz.animationmanagement\Pfz.AnimationManagement\Pfz.AnimationManagement.csproj" />
     <ProjectReference Include="..\..\WPFAspects\WPFAspects\WPFAspects.csproj" />
     <ProjectReference Include="..\SheltonHTPCData\SheltonHTPCData.csproj" />
   </ItemGroup>

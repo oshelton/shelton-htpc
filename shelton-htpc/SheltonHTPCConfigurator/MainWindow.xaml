@@ -7,6 +7,7 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
+        xmlns:content="clr-namespace:SheltonHTPC.NavigationContent"
         mc:Ignorable="d"
         Title="Shelton HTPC Configurator" 
         Height="480" 
@@ -14,200 +15,124 @@
         Width="800"
         TitleCaps="False"
         DataContext="{Binding Model, RelativeSource={RelativeSource Self}}"              
-        Loaded="MetroWindow_Loaded">
+        Loaded="MetroWindow_Loaded"
+        Unloaded="MetroWindow_Unloaded">
+    <controls:MetroWindow.Resources>
+        <Style x:Key="MainNavRoundButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}">
+            <Setter Property="Margin" Value="4,4,4,2"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <EventSetter Event="Checked"  Handler="NavigationButton_Checked"/>
+        </Style>
+    </controls:MetroWindow.Resources>
+    
     <Grid>
-        <DockPanel IsEnabled="{Binding IsInitializing, Converter={x:Static converters:CommonConverters.InvertBoolean}}">
-            <StackPanel DockPanel.Dock="Left">
-                <ToggleButton
+        <DockPanel 
+            Name="ContentPanel"
+            IsEnabled="False">
+            <StackPanel DockPanel.Dock="Left" >
+                <RadioButton
                     Name="GeneralSettingsButton"
-                    Margin="4,4,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Home/General Settings">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="HomeSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Home/General Settings"
+                    Tag="{x:Static content:ContentKind.GeneralSettings}"
+                    Content="{iconPacks:FontAwesome HomeSolid, Width=18, Height=18}"
+                    IsChecked="True"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="LayoutButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Scenes and Layouts">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="SitemapSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Scenes and Layouts"
+                    Tag="{x:Static content:ContentKind.Layout}"
+                    Content="{iconPacks:FontAwesome SitemapSolid, Width=18, Height=18}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="MoviesButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Movies">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="VideoSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Movies"
+                    Tag="{x:Static content:ContentKind.Movies}"
+                    Visibility="{Binding GeneralSettings.EnableMovies, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome VideoSolid, Width=18, Height=18}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="SeriesButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="TV Series">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="TvSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="TV Series"
+                    Tag="{x:Static content:ContentKind.Series}"
+                    Visibility="{Binding GeneralSettings.EnableSeries, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome TvSolid, Width=18, Height=18}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="MusicButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Music">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="MusicSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Music"
+                    Tag="{x:Static content:ContentKind.Music}"
+                    Visibility="{Binding GeneralSettings.EnableMusic, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome MusicSolid}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="PhotosButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Photos">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="ImageRegular" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Photos"
+                    Tag="{x:Static content:ContentKind.Photos}"
+                    Visibility="{Binding GeneralSettings.EnablePhotos, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome ImageRegular, Width=18, Height=18}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="GamesButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Games">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="GamepadSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Games"
+                    Tag="{x:Static content:ContentKind.Games}"
+                    Visibility="{Binding GeneralSettings.EnableGames, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome GamepadSolid, Width=18, Height=18}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="ApplicationsButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="TV Series">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="LaptopSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Applications"
+                    Tag="{x:Static content:ContentKind.Applications}"
+                    Visibility="{Binding GeneralSettings.EnableApplications, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome LaptopSolid, Width=18, Height=18}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="WebSitesButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Web Sites">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="InternetExplorerBrands" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Web Sites"
+                    Tag="{x:Static content:ContentKind.WebSites}"
+                    Visibility="{Binding GeneralSettings.EnableWebSites, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome InternetExplorerBrands, Width=18, Height=18}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="WidgetsButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Widgets">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="CogSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Widgets"
+                    Tag="{x:Static content:ContentKind.Widgets}"
+                    Visibility="{Binding GeneralSettings.EnableWidgets, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome CogSolid, Width=18, Height=18}"/>
 
-                <ToggleButton
+                <RadioButton
                     Name="WebAccessButton"
-                    Margin="4,2,4,2"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
-                    ToolTip="Server/Web Access">
-                    <ToggleButton.Content>
-                        <iconPacks:PackIconFontAwesome 
-                            Kind="ServerSolid" 
-                            HorizontalAlignment="Center"
-                            Margin="8"
-                            Width="18"
-                            Height="18"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
+                    Style="{StaticResource MainNavRoundButton}"
+                    ToolTip="Server/Web Access"
+                    Tag="{x:Static content:ContentKind.WebAccess}"
+                    Visibility="{Binding GeneralSettings.EnableWebAccess, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
+                    Content="{iconPacks:FontAwesome ServerSolid, Width=18, Height=18}"/>
             </StackPanel>
 
-            <ContentControl/>
+            <ContentControl Content="{Binding CurrentContentModel}"/>
         </DockPanel>
-
-        <Rectangle
-            Fill="White"
-            Opacity="0.8"
-            Visibility="{Binding IsInitializing, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"/>
-
-        <StackPanel
-            VerticalAlignment="Center"
-            Visibility="{Binding IsInitializing, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}">
-            <controls:ProgressRing IsActive="{Binding IsInitializing}"/>
-            <Label HorizontalAlignment="Center">Loading...</Label>
-        </StackPanel>
+        
+        <Border
+            Name="LoadingContainer">
+            <Grid>
+                <Rectangle
+                    Fill="White"
+                    Opacity="0.8"/>
+                <StackPanel VerticalAlignment="Center">
+                    <controls:ProgressRing IsActive="{Binding IsInitializing}"/>
+                    <Label HorizontalAlignment="Center">Loading...</Label>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </controls:MetroWindow>
