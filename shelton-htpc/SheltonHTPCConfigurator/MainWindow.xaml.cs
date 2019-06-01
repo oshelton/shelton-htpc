@@ -18,6 +18,7 @@ namespace SheltonHTPC
         {
             Pfz.AnimationManagement.Wpf.Initializer.Initialize();
             Model = new MainWindowViewModel();
+            this.DataContext = Model;
 
             InitializeComponent();
         }
@@ -30,7 +31,7 @@ namespace SheltonHTPC
 
             await Model.Initialize();
 
-            Model.SetContent(ContentKind.GeneralSettings);
+            Model.ChangeContentTo(ContentKind.GeneralSettings);
         }
 
         private void MetroWindow_Unloaded(object sender, RoutedEventArgs e)
@@ -54,9 +55,10 @@ namespace SheltonHTPC
 
         private IDisposable _InitializedObserver;
 
-        private void NavigationButton_Checked(object sender, RoutedEventArgs e)
+        private void NavigationButton_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Model.SetContent((ContentKind)((FrameworkElement)sender).Tag);
+            Model.ChangeContentTo((ContentKind)((FrameworkElement)sender).Tag);
+            e.Handled = true;
         }
     }
 }

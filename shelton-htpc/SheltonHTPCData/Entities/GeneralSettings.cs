@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SheltonHTPC.Data.Entities
 {
+    /// <summary>
+    /// Model for the general/non-specific settings for the application.
+    /// </summary>
     public class GeneralSettings: WPFAspects.Core.Model
     {
         /// <summary>
@@ -19,7 +22,7 @@ namespace SheltonHTPC.Data.Entities
         {
             return Task.Run(() =>
             {
-                string dataPathFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SheltonHTPC", "DataPath.txt");
+                string dataPathFilePath = DataHelper.DataPathFilePath;
 
                 if (File.Exists(dataPathFilePath))
                 {
@@ -74,28 +77,67 @@ namespace SheltonHTPC.Data.Entities
         public Task Serialize()
         {
             //Update data path.
-            string dataPathFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SheltonHTPC", "DataPath.txt");
+            string dataPathFilePath = DataHelper.DataPathFilePath;
+            if (!File.Exists(dataPathFilePath))
+                Directory.CreateDirectory(Path.GetDirectoryName(dataPathFilePath));
             File.WriteAllText(dataPathFilePath, DataPath);
 
             //Update the general settings.
             string settingsFilePath = Path.Combine(DataPath, "GeneralSettings.json");
 
             var jsonRoot = new JObject();
-            jsonRoot[nameof(RunOnStartup)] = RunOnStartup;
-            jsonRoot[nameof(IdleWaitMinutes)] = IdleWaitMinutes;
-            jsonRoot[nameof(EnableMovies)] = EnableMovies;
-            jsonRoot[nameof(EnableSeries)] = EnableSeries;
-            jsonRoot[nameof(EnableMusic)] = EnableMusic;
-            jsonRoot[nameof(EnablePhotos)] = EnablePhotos;
-            jsonRoot[nameof(EnableGames)] = EnableGames;
-            jsonRoot[nameof(EnableWebAccess)] = EnableWebAccess;
-            jsonRoot[nameof(EnableApplications)] = EnableApplications;
-            jsonRoot[nameof(EnableWebSites)] = EnableWebSites;
-            jsonRoot[nameof(EnableWidgets)] = EnableWidgets;
+            jsonRoot[nameof(RunOnStartup)] = _RunOnStartup;
+            jsonRoot[nameof(IdleWaitMinutes)] = _IdleWaitMinutes;
+            jsonRoot[nameof(EnableMovies)] = _EnableMovies;
+            jsonRoot[nameof(EnableSeries)] = _EnableSeries;
+            jsonRoot[nameof(EnableMusic)] = _EnableMusic;
+            jsonRoot[nameof(EnablePhotos)] = _EnablePhotos;
+            jsonRoot[nameof(EnableGames)] = _EnableGames;
+            jsonRoot[nameof(EnableWebAccess)] = _EnableWebAccess;
+            jsonRoot[nameof(EnableApplications)] = _EnableApplications;
+            jsonRoot[nameof(EnableWebSites)] = _EnableWebSites;
+            jsonRoot[nameof(EnableWidgets)] = _EnableWidgets;
 
             using (StreamWriter file = File.CreateText(settingsFilePath))
             using (JsonTextWriter writer = new JsonTextWriter(file))
                 return jsonRoot.WriteToAsync(writer);
+        }
+
+        public GeneralSettings Duplicate()
+        {
+            return new GeneralSettings()
+            {
+                _DataPath = this.DataPath,
+                _RunOnStartup = this.RunOnStartup,
+                _IdleWaitMinutes = this.IdleWaitMinutes,
+                _EnableMovies = this.EnableMovies,
+                _EnableSeries = this.EnableSeries,
+                _EnableMusic = this.EnableMusic,
+                _EnablePhotos = this.EnablePhotos,
+                _EnableGames = this.EnableGames,
+                _EnableWebAccess = this.EnableWebAccess,
+                _EnableApplications = this.EnableApplications,
+                _EnableWebSites = this.EnableWebSites,
+                _EnableWidgets = this.EnableWidgets,
+            };
+        }
+
+        public void MergeChangesFromOther(GeneralSettings other)
+        {
+            _DataPath = other.DataPath;
+            _RunOnStartup = other.RunOnStartup;
+            _IdleWaitMinutes = other.IdleWaitMinutes;
+            _EnableMovies = other.EnableMovies;
+            _EnableSeries = other.EnableSeries;
+            _EnableMusic = other.EnableMusic;
+            _EnablePhotos = other.EnablePhotos;
+            _EnableGames = other.EnableGames;
+            _EnableWebAccess = other.EnableWebAccess;
+            _EnableApplications = other.EnableApplications;
+            _EnableWebSites = other.EnableWebSites;
+            _EnableWidgets = other.EnableWidgets;
+
+            RaisePropertyChanged(null);
         }
 
         private string _DataPath = null;
@@ -159,7 +201,7 @@ namespace SheltonHTPC.Data.Entities
             set => SetPropertyBackingValue(value, ref _EnableMusic);
         }
 
-        private bool _EnablePhotos = false;
+        private bool _EnablePhotos = true;
         /// <summary>
         /// Whether or not pictures is enabled in the application.
         /// </summary>
@@ -219,24 +261,5 @@ namespace SheltonHTPC.Data.Entities
             set => SetPropertyBackingValue(value, ref _EnableWidgets);
         }
         #endregion
-
-        public GeneralSettings Duplicate()
-        {
-            return new GeneralSettings()
-            {
-                _DataPath = this.DataPath,
-                _RunOnStartup = this.RunOnStartup,
-                _IdleWaitMinutes = this.IdleWaitMinutes,
-                _EnableMovies = this.EnableMovies,
-                _EnableSeries = this.EnableSeries,
-                _EnableMusic = this.EnableMusic,
-                _EnablePhotos = this.EnablePhotos,
-                _EnableGames = this.EnableGames,
-                _EnableWebAccess = this.EnableWebAccess,
-                _EnableApplications = this.EnableApplications,
-                _EnableWebSites = this.EnableWebSites,
-                _EnableWidgets = this.EnableWidgets,
-            };
-        }
     }
 }
