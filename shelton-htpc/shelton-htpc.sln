@@ -9,18 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFAspects", "..\WPFAspects
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SheltonHTPCConfigurator", "SheltonHTPCConfigurator\SheltonHTPCConfigurator.csproj", "{F2B48B8B-C05F-4A35-859A-D38228D8BC3F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedAssets", "SharedAssets", "{437A4289-0A98-4BB2-A53D-879BF4C7982C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{2F73D757-9CE2-4496-8EBB-AED019E666C8}"
-	ProjectSection(SolutionItems) = preProject
-		SharedAssets\play128x128.png = SharedAssets\play128x128.png
-		SharedAssets\play16x16.png = SharedAssets\play16x16.png
-		SharedAssets\play256x256.png = SharedAssets\play256x256.png
-		SharedAssets\play32x32.png = SharedAssets\play32x32.png
-		SharedAssets\play48x48.png = SharedAssets\play48x48.png
-		SharedAssets\play96x96.png = SharedAssets\play96x96.png
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfAspectTests", "..\WPFAspects\WpfAspectsTests\WpfAspectTests.csproj", "{30437C43-AE40-4A94-AA45-6CBB2116E326}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{9EDC8F24-379F-41E2-9A1A-BB8E96C96E07}"
@@ -91,7 +79,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6837CC1E-52CA-4092-8E91-97BF7D7585A3} = {9EDC8F24-379F-41E2-9A1A-BB8E96C96E07}
-		{2F73D757-9CE2-4496-8EBB-AED019E666C8} = {437A4289-0A98-4BB2-A53D-879BF4C7982C}
 		{30437C43-AE40-4A94-AA45-6CBB2116E326} = {9EDC8F24-379F-41E2-9A1A-BB8E96C96E07}
 		{E01BA534-4D3E-4BFB-A91C-F26B846176C6} = {9EDC8F24-379F-41E2-9A1A-BB8E96C96E07}
 		{916D0ABC-7E3A-458F-81D4-604935DA9AD5} = {9EDC8F24-379F-41E2-9A1A-BB8E96C96E07}

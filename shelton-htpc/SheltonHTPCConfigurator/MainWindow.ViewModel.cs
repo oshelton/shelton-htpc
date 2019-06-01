@@ -16,7 +16,17 @@ namespace SheltonHTPC
         {
             _NavigationContentModels = new Dictionary<ContentKind, NavigationContentModelBase>()
             {
-                { ContentKind.GeneralSettings, new GeneralSettingsContentModel() }
+                { ContentKind.GeneralSettings, new GeneralSettingsContentModel() },
+                { ContentKind.Layout, new LayoutContentModel() },
+                { ContentKind.Movies, new MoviesContentModel() },
+                { ContentKind.Series, new SeriesContentModel() },
+                { ContentKind.Music, new MusicContentModel() },
+                { ContentKind.Photos, new PhotosContentModel() },
+                { ContentKind.Games, new GamesContentModel() },
+                { ContentKind.Applications, new ApplicationsContentModel() },
+                { ContentKind.WebSites, new WebSitesContentModel() },
+                { ContentKind.Widgets, new WidgetsContentModel() },
+                { ContentKind.WebAccess, new WebAccessContentModel() },
             };
         }
 
@@ -25,11 +35,17 @@ namespace SheltonHTPC
             IsInitializing = true;
             var result = await GeneralSettings.Deserialize();
 
+            var initTasks = new List<Task>();
+            foreach (var contentModel in _NavigationContentModels.Values)
+                initTasks.Add(contentModel.Initialize(result));
+
+            await Task.WhenAll(initTasks.ToArray());
+
             GeneralSettings = result;
             IsInitializing = false;
         }
 
-        public void SetContent(ContentKind kind)
+        public void ChangeContentTo(ContentKind kind)
         {
             NavigationContentModelBase newContent = null;
             if (_NavigationContentModels.TryGetValue(kind, out newContent))
@@ -64,7 +80,14 @@ namespace SheltonHTPC
         public NavigationContentModelBase CurrentContentModel
         {
             get => _CurrentContentModel;
-            set => SetPropertyBackingValue(value, ref _CurrentContentModel);
+            set
+            {
+                if (_CurrentContentModel != null && value != _CurrentContentModel)
+                    _CurrentContentModel.OnNavigatedAwayFrom();
+
+                if (SetPropertyBackingValue(value, ref _CurrentContentModel) && value != null)
+                    _CurrentContentModel.OnNavigatedTo();
+            }
         }
 
         private Dictionary<ContentKind, NavigationContentModelBase> _NavigationContentModels;

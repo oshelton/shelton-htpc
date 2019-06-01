@@ -1,136 +1,173 @@
-﻿<controls:MetroWindow x:Class="SheltonHTPC.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SheltonHTPCConfigurator"
-        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
-        xmlns:content="clr-namespace:SheltonHTPC.NavigationContent"
-        mc:Ignorable="d"
-        Title="Shelton HTPC Configurator" 
-        Height="480" 
-        MinHeight="470"
-        Width="800"
-        TitleCaps="False"
-        DataContext="{Binding Model, RelativeSource={RelativeSource Self}}"              
-        Loaded="MetroWindow_Loaded"
-        Unloaded="MetroWindow_Unloaded">
+﻿<controls:MetroWindow
+    x:Class="SheltonHTPC.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:content="clr-namespace:SheltonHTPC.NavigationContent"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:SheltonHTPCConfigurator"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Shelton HTPC Configurator"
+    Width="800"
+    Height="520"
+    MinWidth="800"
+    MinHeight="520"
+    Loaded="MetroWindow_Loaded"
+    TitleCaps="False"
+    Unloaded="MetroWindow_Unloaded"
+    mc:Ignorable="d">
     <controls:MetroWindow.Resources>
-        <Style x:Key="MainNavRoundButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}">
-            <Setter Property="Margin" Value="4,4,4,2"/>
-            <Setter Property="Padding" Value="8"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <EventSetter Event="Checked"  Handler="NavigationButton_Checked"/>
+        <Style
+            x:Key="MainNavRoundButton"
+            BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}"
+            TargetType="{x:Type ToggleButton}">
+            <Setter Property="Margin" Value="4,7,4,2" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <EventSetter Event="PreviewMouseDown" Handler="NavigationButton_PreviewMouseDown" />
         </Style>
     </controls:MetroWindow.Resources>
-    
+
     <Grid>
-        <DockPanel 
-            Name="ContentPanel"
-            IsEnabled="False">
-            <StackPanel DockPanel.Dock="Left" >
+        <DockPanel Name="ContentPanel" IsEnabled="False">
+            <StackPanel DockPanel.Dock="Left">
                 <RadioButton
                     Name="GeneralSettingsButton"
+                    Content="{iconPacks:FontAwesome HomeSolid,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.GeneralSettings}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Home/General Settings"
                     Tag="{x:Static content:ContentKind.GeneralSettings}"
-                    Content="{iconPacks:FontAwesome HomeSolid, Width=18, Height=18}"
-                    IsChecked="True"/>
+                    ToolTip="Home/General Settings" />
 
                 <RadioButton
                     Name="LayoutButton"
+                    Content="{iconPacks:FontAwesome SitemapSolid,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Layout}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Scenes and Layouts"
                     Tag="{x:Static content:ContentKind.Layout}"
-                    Content="{iconPacks:FontAwesome SitemapSolid, Width=18, Height=18}"/>
+                    ToolTip="Scenes and Layout" />
 
                 <RadioButton
                     Name="MoviesButton"
+                    Content="{iconPacks:FontAwesome VideoSolid,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Movies}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Movies"
                     Tag="{x:Static content:ContentKind.Movies}"
-                    Visibility="{Binding GeneralSettings.EnableMovies, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome VideoSolid, Width=18, Height=18}"/>
+                    ToolTip="Movies"
+                    Visibility="{Binding GeneralSettings.EnableMovies, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
 
                 <RadioButton
                     Name="SeriesButton"
+                    Content="{iconPacks:FontAwesome TvSolid,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Series}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="TV Series"
                     Tag="{x:Static content:ContentKind.Series}"
-                    Visibility="{Binding GeneralSettings.EnableSeries, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome TvSolid, Width=18, Height=18}"/>
+                    ToolTip="TV Series"
+                    Visibility="{Binding GeneralSettings.EnableSeries, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
 
                 <RadioButton
                     Name="MusicButton"
+                    Content="{iconPacks:FontAwesome MusicSolid}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Music}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Music"
                     Tag="{x:Static content:ContentKind.Music}"
-                    Visibility="{Binding GeneralSettings.EnableMusic, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome MusicSolid}"/>
+                    ToolTip="Music"
+                    Visibility="{Binding GeneralSettings.EnableMusic, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
 
                 <RadioButton
                     Name="PhotosButton"
+                    Content="{iconPacks:FontAwesome ImageRegular,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Photos}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Photos"
                     Tag="{x:Static content:ContentKind.Photos}"
-                    Visibility="{Binding GeneralSettings.EnablePhotos, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome ImageRegular, Width=18, Height=18}"/>
+                    ToolTip="Photos"
+                    Visibility="{Binding GeneralSettings.EnablePhotos, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
 
                 <RadioButton
                     Name="GamesButton"
+                    Content="{iconPacks:FontAwesome GamepadSolid,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Games}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Games"
                     Tag="{x:Static content:ContentKind.Games}"
-                    Visibility="{Binding GeneralSettings.EnableGames, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome GamepadSolid, Width=18, Height=18}"/>
+                    ToolTip="Games"
+                    Visibility="{Binding GeneralSettings.EnableGames, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
 
                 <RadioButton
                     Name="ApplicationsButton"
+                    Content="{iconPacks:FontAwesome LaptopSolid,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Applications}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Applications"
                     Tag="{x:Static content:ContentKind.Applications}"
-                    Visibility="{Binding GeneralSettings.EnableApplications, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome LaptopSolid, Width=18, Height=18}"/>
+                    ToolTip="Applications"
+                    Visibility="{Binding GeneralSettings.EnableApplications, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
 
                 <RadioButton
                     Name="WebSitesButton"
+                    Content="{iconPacks:FontAwesome InternetExplorerBrands,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.WebSites}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Web Sites"
                     Tag="{x:Static content:ContentKind.WebSites}"
-                    Visibility="{Binding GeneralSettings.EnableWebSites, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome InternetExplorerBrands, Width=18, Height=18}"/>
+                    ToolTip="Web Sites"
+                    Visibility="{Binding GeneralSettings.EnableWebSites, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
 
                 <RadioButton
                     Name="WidgetsButton"
+                    Content="{iconPacks:FontAwesome CogSolid,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Widgets}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Widgets"
                     Tag="{x:Static content:ContentKind.Widgets}"
-                    Visibility="{Binding GeneralSettings.EnableWidgets, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome CogSolid, Width=18, Height=18}"/>
+                    ToolTip="Widgets"
+                    Visibility="{Binding GeneralSettings.EnableWidgets, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
 
                 <RadioButton
                     Name="WebAccessButton"
+                    Content="{iconPacks:FontAwesome ServerSolid,
+                                                    Width=18,
+                                                    Height=18}"
+                    IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.WebAccess}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
-                    ToolTip="Server/Web Access"
                     Tag="{x:Static content:ContentKind.WebAccess}"
-                    Visibility="{Binding GeneralSettings.EnableWebAccess, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}"
-                    Content="{iconPacks:FontAwesome ServerSolid, Width=18, Height=18}"/>
+                    ToolTip="Server/Web Access"
+                    Visibility="{Binding GeneralSettings.EnableWebAccess, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
             </StackPanel>
 
-            <ContentControl Content="{Binding CurrentContentModel}"/>
+            <ContentControl Margin="12" Content="{Binding CurrentContentModel}">
+                <ContentControl.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="NavigationContent\GeneralSettingsView.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </ContentControl.Resources>
+            </ContentControl>
         </DockPanel>
-        
-        <Border
-            Name="LoadingContainer">
+
+        <Border Name="LoadingContainer">
             <Grid>
-                <Rectangle
-                    Fill="White"
-                    Opacity="0.8"/>
+                <Rectangle Fill="White" Opacity="0.8" />
                 <StackPanel VerticalAlignment="Center">
-                    <controls:ProgressRing IsActive="{Binding IsInitializing}"/>
-                    <Label HorizontalAlignment="Center">Loading...</Label>
+                    <controls:ProgressRing IsActive="{Binding IsInitializing}" />
+                    <Label HorizontalAlignment="Center" FontWeight="Bold">Loading...</Label>
                 </StackPanel>
             </Grid>
         </Border>
