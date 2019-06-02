@@ -103,12 +103,48 @@
                         </Button>
                     </Border>
 
+                    <CheckBox
+                        Name="IncludeImagesCheckBox"
+                        Margin="4,12,4,0"
+                        Content="Include thumbnail and low-res placeholder images in backup."
+                        DockPanel.Dock="Bottom"
+                        ToolTip="If unchecked, these images will be regenerated on restore.  If checked backups may be much larger." />
+
                     <TextBlock
                         Margin="4,0,4,0"
                         DockPanel.Dock="Top"
                         TextWrapping="Wrap">
                         This tool will backup all Shelton HTPC configuration data into a .bak.htpc file.<LineBreak /><LineBreak />
-                        This will backup all metadata/cached data in addition to all uration information.</TextBlock>
+                        This will backup all metadata/cached data in addition to all configuration information.</TextBlock>
+                </DockPanel>
+            </GroupBox>
+
+            <GroupBox Margin="8" Header="Restore (Not Implemented)">
+                <DockPanel>
+                    <Border
+                        Margin="4,16,4,0"
+                        Padding="0,8,0,4"
+                        BorderBrush="{StaticResource AccentColorBrush2}"
+                        BorderThickness="0,1,0,0"
+                        DockPanel.Dock="Bottom">
+                        <Button
+                            Width="96"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            controls:ButtonHelper.PreserveTextCase="True"
+                            DockPanel.Dock="Right"
+                            IsEnabled="False"
+                            Style="{StaticResource SquareButtonStyle}">
+                            Restore
+                        </Button>
+                    </Border>
+
+                    <TextBlock
+                        Margin="4,0,4,0"
+                        DockPanel.Dock="Top"
+                        TextWrapping="Wrap">
+                        This tool will restore a previously made Shelton HTPC backup (a .bak.htpc file).<LineBreak /><LineBreak />
+                        This will replace in current all existing data (except for the current data path).</TextBlock>
                 </DockPanel>
             </GroupBox>
         </UniformGrid>
