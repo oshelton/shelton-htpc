@@ -2,6 +2,7 @@
     x:Class="SheltonHTPC.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:common="clr-namespace:SheltonHTPC.Common;assembly=SheltonHTPC.Common"
     xmlns:content="clr-namespace:SheltonHTPC.NavigationContent"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
@@ -18,6 +19,7 @@
     TitleCaps="False"
     Unloaded="MetroWindow_Unloaded"
     mc:Ignorable="d">
+
     <controls:MetroWindow.Resources>
         <Style
             x:Key="MainNavRoundButton"
@@ -162,14 +164,9 @@
             </ContentControl>
         </DockPanel>
 
-        <Border Name="LoadingContainer">
-            <Grid>
-                <Rectangle Fill="White" Opacity="0.8" />
-                <StackPanel VerticalAlignment="Center">
-                    <controls:ProgressRing IsActive="{Binding IsInitializing}" />
-                    <Label HorizontalAlignment="Center" FontWeight="Bold">Loading...</Label>
-                </StackPanel>
-            </Grid>
-        </Border>
+        <common:WorkingIndicator
+            Name="exclusiveWorkIndicator"
+            IndicatorFinished="ExclusiveWorkIndicator_IndicatorFinished"
+            IsWorking="{Binding IsInitializing}" />
     </Grid>
 </controls:MetroWindow>

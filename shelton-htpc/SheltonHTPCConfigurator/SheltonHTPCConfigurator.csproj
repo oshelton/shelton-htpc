@@ -42,6 +42,14 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="2.3.0" />
@@ -60,6 +68,7 @@
     <ProjectReference Include="..\..\pfz.animationmanagement\Pfz.AnimationManagement.Wpf\Pfz.AnimationManagement.Wpf.csproj" />
     <ProjectReference Include="..\..\pfz.animationmanagement\Pfz.AnimationManagement\Pfz.AnimationManagement.csproj" />
     <ProjectReference Include="..\..\WPFAspects\WPFAspects\WPFAspects.csproj" />
+    <ProjectReference Include="..\SheltonHTPCCommon\SheltonHTPCCommon.csproj" />
     <ProjectReference Include="..\SheltonHTPCData\SheltonHTPCData.csproj" />
   </ItemGroup>
 

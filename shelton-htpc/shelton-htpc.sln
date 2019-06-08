@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pfz.AnimationManagement", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pfz.AnimationManagement.Wpf", "..\pfz.animationmanagement\Pfz.AnimationManagement.Wpf\Pfz.AnimationManagement.Wpf.csproj", "{916D0ABC-7E3A-458F-81D4-604935DA9AD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheltonHTPCCommon", "SheltonHTPCCommon\SheltonHTPCCommon.csproj", "{1A542123-BE0C-4608-A997-B2388C963FBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,14 @@ Global
 		{916D0ABC-7E3A-458F-81D4-604935DA9AD5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{916D0ABC-7E3A-458F-81D4-604935DA9AD5}.Release|x64.ActiveCfg = Release|Any CPU
 		{916D0ABC-7E3A-458F-81D4-604935DA9AD5}.Release|x64.Build.0 = Release|Any CPU
+		{1A542123-BE0C-4608-A997-B2388C963FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A542123-BE0C-4608-A997-B2388C963FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A542123-BE0C-4608-A997-B2388C963FBC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1A542123-BE0C-4608-A997-B2388C963FBC}.Debug|x64.Build.0 = Debug|Any CPU
+		{1A542123-BE0C-4608-A997-B2388C963FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A542123-BE0C-4608-A997-B2388C963FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A542123-BE0C-4608-A997-B2388C963FBC}.Release|x64.ActiveCfg = Release|Any CPU
+		{1A542123-BE0C-4608-A997-B2388C963FBC}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
