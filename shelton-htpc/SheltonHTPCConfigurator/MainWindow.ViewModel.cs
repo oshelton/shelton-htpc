@@ -39,8 +39,6 @@ namespace SheltonHTPC
             foreach (var contentModel in _NavigationContentModels.Values)
                 initTasks.Add(contentModel.Initialize(result));
 
-            await Task.Delay(5000);
-
             await Task.WhenAll(initTasks.ToArray());
 
             GeneralSettings = result;

@@ -3,6 +3,7 @@ using Pfz.AnimationManagement;
 using Pfz.AnimationManagement.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -165,14 +166,23 @@ namespace SheltonHTPC.Common
                 return;
             }
 
-            AnimationManager.Add(AnimationBuilder.BeginSequence()
-                .Add(() =>
-                {
-                    this.Visibility = Visibility.Visible;
-                    ProgressIndicator.IsActive = true;
-                })
-                .Range(0.0, 1.0, FadeInTime, (value) => this.Opacity = value)
-            .EndSequence());
+            if (FadeInTime.TotalMilliseconds > 0)
+            {
+                AnimationManager.Add(AnimationBuilder.BeginSequence()
+                    .Add(() =>
+                    {
+                        this.Visibility = Visibility.Visible;
+                        ProgressIndicator.IsActive = true;
+                    })
+                    .Range(0.0, 1.0, FadeInTime, (value) => this.Opacity = value)
+                .EndSequence());
+            }
+            else
+            {
+                this.Visibility = Visibility.Visible;
+                ProgressIndicator.IsActive = true;
+                this.Opacity = 1.0;
+            }
         }
 
         private void StopWorking()

@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System.IO;
+using WPFAspects.Utils;
 
 namespace SheltonHTPC.NavigationContent.GeneralSettingsSections
 {
@@ -28,7 +29,7 @@ namespace SheltonHTPC.NavigationContent.GeneralSettingsSections
             var result = await window.ShowMessageAsync("Confirm Data Reset", "If you continue all Shelton HTPC data will be removed and you will not be able to get it back (except by restoring a previously made backup).  The application will also be restarted.\n\nAre you sure you want to continue?", MessageDialogStyle.AffirmativeAndNegative);
 
             if (result == MessageDialogResult.Affirmative)
-                Utils.GeneralTools.PurgeData(context);
+                await WorkManager.StartApplicationBlockingWork(() => Utils.GeneralTools.PurgeData(context), "Purging data...");
         }
     }
 }

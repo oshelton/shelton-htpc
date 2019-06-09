@@ -6,6 +6,7 @@ using SheltonHTPC.NavigationContent;
 using System;
 using System.Reactive.Linq;
 using System.Windows;
+using WPFAspects.Utils;
 
 namespace SheltonHTPC
 {
@@ -25,7 +26,7 @@ namespace SheltonHTPC
 
         private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await Model.Initialize();
+            await WorkManager.StartApplicationBlockingWork(Model.Initialize, "Loading...");
 
             Model.ChangeContentTo(ContentKind.GeneralSettings);
         }
@@ -40,11 +41,6 @@ namespace SheltonHTPC
         {
             Model.ChangeContentTo((ContentKind)((FrameworkElement)sender).Tag);
             e.Handled = true;
-        }
-
-        private void ExclusiveWorkIndicator_IndicatorFinished(object sender, EventArgs e)
-        {
-            ContentPanel.IsEnabled = true;
         }
     }
 }

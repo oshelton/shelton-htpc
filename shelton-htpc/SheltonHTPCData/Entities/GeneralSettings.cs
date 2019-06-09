@@ -66,6 +66,7 @@ namespace SheltonHTPC.Data.Entities
                     {
                         DataPath = Path.GetDirectoryName(dataPathFilePath),
                     };
+                    results.Serialize().Wait();
                     return results;
                 }
             });

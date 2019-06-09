@@ -10,6 +10,7 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:SheltonHTPCConfigurator"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utils="clr-namespace:WPFAspects.Utils;assembly=WPFAspects"
     Title="Shelton HTPC Configurator"
     Width="800"
     Height="520"
@@ -33,7 +34,7 @@
     </controls:MetroWindow.Resources>
 
     <Grid>
-        <DockPanel Name="ContentPanel" IsEnabled="False">
+        <DockPanel Name="ContentPanel" IsEnabled="{Binding Path=(utils:WorkManager.IsApplicationBlockingWorkInProgress), Converter={x:Static converters:CommonConverters.InvertBoolean}}">
             <StackPanel DockPanel.Dock="Left">
                 <RadioButton
                     Name="GeneralSettingsButton"
@@ -166,7 +167,7 @@
 
         <common:WorkingIndicator
             Name="exclusiveWorkIndicator"
-            IndicatorFinished="ExclusiveWorkIndicator_IndicatorFinished"
-            IsWorking="{Binding IsInitializing}" />
+            IsWorking="{Binding Path=(utils:WorkManager.IsApplicationBlockingWorkInProgress)}"
+            Text="{Binding Path=(utils:WorkManager.ApplicationBlockingWorkTitle)}" />
     </Grid>
 </controls:MetroWindow>
