@@ -1,21 +1,11 @@
 ﻿using MahApps.Metro.Controls;
-using Pfz.AnimationManagement;
-using Pfz.AnimationManagement.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 using WPFAspects.Utils;
 
 namespace SheltonHTPC.Common
@@ -28,6 +18,8 @@ namespace SheltonHTPC.Common
         }
 
         public static readonly string ProgressRingPartName = "PART_ProgressRing";
+        public static readonly string FadeInStoryboardName = "FadeInStoryboard";
+        public static readonly string FadeOutStoryboardName = "FadeOutStoryboard";
 
         public static readonly DependencyProperty BackgroundOpacityProperty = DependencyProperty.Register(
             nameof(BackgroundOpacity), typeof(double), typeof(WorkingIndicator), new PropertyMetadata(0.6));
@@ -138,6 +130,8 @@ namespace SheltonHTPC.Common
             set => SetValue(FadeOutTimeProperty, value);
         }
 
+        public ProgressRing ProgressIndicator { get; private set; }
+
         public static void OnIsWorkingChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             WorkingIndicator indicator = sender as WorkingIndicator;
@@ -154,53 +148,66 @@ namespace SheltonHTPC.Common
             base.OnApplyTemplate();
 
             ProgressIndicator = VisualTreeWalker.FindChildrenOfType<ProgressRing>(this).First(d => d.Name == ProgressRingPartName);
+            _FadeInStoryboard = this.FindResource(FadeInStoryboardName) as Storyboard;
+            _FadeOutStoryboard = this.FindResource(FadeOutStoryboardName) as Storyboard;
         }
 
         private async void StartWorking()
         {
-            await Task.Delay(ShowDelay);
+            using (WorkManager.StartScopedWork(() => _IsStarting = true, () => _IsStarting = false))
+            {
+                await Task.Delay(ShowDelay);
+
+                if (!IsWorking)
+                {
+                    IndicatorFinished?.Invoke(this, new EventArgs());
+                    return;
+                }
+
+                this.Visibility = Visibility.Visible;
+
+                if (FadeInTime.TotalMilliseconds != 0)
+                {
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        if (_FadeInStoryboard != null)
+                            this.BeginStoryboard(_FadeInStoryboard);
+                    });
+                }
+                else
+                {
+                    this.Opacity = 1.0;
+                    await Dispatcher.InvokeAsync(() => ProgressIndicator.IsActive = true);
+                }
+            }
 
             if (!IsWorking)
-            {
-                IndicatorFinished?.Invoke(this, new EventArgs());
-                return;
-            }
-
-            if (FadeInTime.TotalMilliseconds > 0)
-            {
-                AnimationManager.Add(AnimationBuilder.BeginSequence()
-                    .Add(() =>
-                    {
-                        this.Visibility = Visibility.Visible;
-                        ProgressIndicator.IsActive = true;
-                    })
-                    .Range(0.0, 1.0, FadeInTime, (value) => this.Opacity = value)
-                .EndSequence());
-            }
-            else
-            {
-                this.Visibility = Visibility.Visible;
-                ProgressIndicator.IsActive = true;
-                this.Opacity = 1.0;
-            }
+                await Dispatcher.InvokeAsync(StopWorking);
         }
 
-        private void StopWorking()
+        private async void StopWorking()
         {
-            if (this.Opacity > 0.0)
+            if (!_IsStarting)
             {
-                AnimationManager.Add(AnimationBuilder.BeginSequence()
-                    .Range(1.0, 0.0, FadeOutTime, (value) => this.Opacity = value)
-                    .Add(() =>
-                    {
-                        ProgressIndicator.IsActive = false;
-                        this.Visibility = Visibility.Collapsed;
-                        IndicatorFinished?.Invoke(this, new EventArgs());
-                    })
-                .EndSequence());
+                if (_FadeOutStoryboard != null && FadeOutTime.TotalMilliseconds != 0)
+                {
+                    this.BeginStoryboard(_FadeOutStoryboard);
+
+                    await Task.Delay(FadeOutTime);
+                }
+                else
+                {
+                    ProgressIndicator.IsActive = false;
+                    this.Visibility = Visibility.Collapsed;
+                    this.Opacity = 0.0;
+                }
+
+                IndicatorFinished?.Invoke(this, new EventArgs());
             }
         }
 
-        private ProgressRing ProgressIndicator = null;
+        private Storyboard _FadeInStoryboard;
+        private Storyboard _FadeOutStoryboard;
+        private bool _IsStarting;
     }
 }

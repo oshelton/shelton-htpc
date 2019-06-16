@@ -9,6 +9,8 @@
         <Setter Property="Opacity" Value="0.0" />
         <Setter Property="SpinnerWidth" Value="48" />
         <Setter Property="SpinnerWidth" Value="48" />
+        <Setter Property="Opacity" Value="0.0" />
+        <Setter Property="Visibility" Value="Collapsed" />
         <Setter Property="BackgroundOpacity" Value="0.8" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="TextBackground" Value="{DynamicResource AccentColorBrush}" />
@@ -43,6 +45,50 @@
                             </StackPanel>
                         </Grid>
                     </Border>
+
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="FadeInStoryboard">
+                            <BooleanAnimationUsingKeyFrames
+                                Storyboard.Target="{Binding ProgressIndicator, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WorkingIndicator}}}"
+                                Storyboard.TargetProperty="(controls:ProgressRing.IsActive)"
+                                Duration="{Binding FadeOutTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WorkingIndicator}}}">
+                                <DiscreteBooleanKeyFrame KeyTime="{Binding FadeInTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WorkingIndicator}}}" Value="True" />
+                            </BooleanAnimationUsingKeyFrames>
+
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="1"
+                                Duration="{Binding FadeInTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WorkingIndicator}}}">
+                                <DoubleAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseIn" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+
+                        <Storyboard x:Key="FadeOutStoryboard">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Duration="{Binding FadeOutTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WorkingIndicator}}}">
+                                <DiscreteObjectKeyFrame KeyTime="{Binding FadeOutTime, RelativeSource={RelativeSource Self}}" Value="{x:Static Visibility.Collapsed}" />
+                            </ObjectAnimationUsingKeyFrames>
+
+                            <BooleanAnimationUsingKeyFrames
+                                Storyboard.Target="{Binding ProgressIndicator, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WorkingIndicator}}}"
+                                Storyboard.TargetProperty="(controls:ProgressRing.IsActive)"
+                                Duration="{Binding FadeOutTime, RelativeSource={RelativeSource Self}}">
+                                <DiscreteBooleanKeyFrame KeyTime="{Binding FadeOutTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WorkingIndicator}}}" Value="False" />
+                            </BooleanAnimationUsingKeyFrames>
+
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="1"
+                                To="0"
+                                Duration="{Binding FadeOutTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WorkingIndicator}}}">
+                                <DoubleAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseIn" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

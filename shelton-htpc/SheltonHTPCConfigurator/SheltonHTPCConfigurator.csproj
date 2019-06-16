@@ -65,8 +65,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\pfz.animationmanagement\Pfz.AnimationManagement.Wpf\Pfz.AnimationManagement.Wpf.csproj" />
-    <ProjectReference Include="..\..\pfz.animationmanagement\Pfz.AnimationManagement\Pfz.AnimationManagement.csproj" />
     <ProjectReference Include="..\..\WPFAspects\WPFAspects\WPFAspects.csproj" />
     <ProjectReference Include="..\SheltonHTPCCommon\SheltonHTPCCommon.csproj" />
     <ProjectReference Include="..\SheltonHTPCData\SheltonHTPCData.csproj" />
