@@ -1,0 +1,139 @@
+﻿<Window
+    x:Class="LayoutTileExamples.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:LayoutTileExamples"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Layout Example"
+    Width="960"
+    Height="540"
+    Loaded="Window_Loaded"
+    SnapsToDevicePixels="True"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid>
+        <Viewbox Name="SceneContainer" Stretch="UniformToFill">
+            <Grid Width="{x:Static local:App.ViewWidth}" Height="{x:Static local:App.ViewHeight}">
+                <Canvas Name="MovableContainer">
+                    <StackPanel
+                        Name="BackgroundContainer"
+                        Canvas.Left="0"
+                        Orientation="Horizontal" />
+                    <Border
+                        Canvas.Left="0"
+                        Canvas.Top="{x:Static local:App.TopOfContentArea}"
+                        BorderBrush="Black"
+                        BorderThickness="0,1,0,1">
+                        <Rectangle
+                            Width="{x:Static local:App.ViewWidth}"
+                            Height="{x:Static local:App.HeightContentArea}"
+                            Fill="Black"
+                            Opacity="0.6" />
+                    </Border>
+
+                    <StackPanel
+                        Name="TileSceneContainer"
+                        Canvas.Top="{x:Static local:App.TopOfContentArea}"
+                        Height="{x:Static local:App.HeightContentArea}"
+                        Orientation="Horizontal">
+                        <StackPanel.RenderTransform>
+                            <TranslateTransform />
+                        </StackPanel.RenderTransform>
+                    </StackPanel>
+
+                    <TextBlock
+                        Canvas.Left="8"
+                        Canvas.Top="8"
+                        Foreground="White">
+                        <Run FontSize="32" FontWeight="Bold">2:30 PM</Run>
+                        <LineBreak />
+                        <Run FontSize="24" FontWeight="Bold">Sunday June 2nd, 2019</Run>
+
+                        <TextBlock.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                Direction="0"
+                                Opacity="1.0"
+                                ShadowDepth="0"
+                                Color="Black" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </Canvas>
+            </Grid>
+        </Viewbox>
+
+        <StackPanel
+            Margin="12"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Button Name="PreviousButton" Width="64">
+                Previous
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    By="{x:Static local:App.ViewWidth}"
+                                    Storyboard.TargetName="TileSceneContainer"
+                                    Storyboard.TargetProperty="(StackPanel.RenderTransform).(TranslateTransform.X)"
+                                    From="{Binding Path=RenderTransform.X, ElementName=TileSceneContainer}"
+                                    Duration="0:0:0:1">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation
+                                    By="{x:Static local:App.ViewWidth}"
+                                    Storyboard.TargetName="BackgroundContainer"
+                                    Storyboard.TargetProperty="(StackPanel.RenderTransform).(TranslateTransform.X)"
+                                    From="{Binding Path=RenderTransform.X, ElementName=TileSceneContainer}"
+                                    Duration="0:0:0:1">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button
+                Name="NextButton"
+                Width="64"
+                Margin="8,0,0,0">
+                Next
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    By="{Binding Source={x:Static local:App.ViewWidth}, Converter={x:Static converters:CommonConverters.MultiplyDoubleByNegativeOne}}"
+                                    Storyboard.TargetName="TileSceneContainer"
+                                    Storyboard.TargetProperty="(StackPanel.RenderTransform).(TranslateTransform.X)"
+                                    From="{Binding Path=RenderTransform.X, ElementName=TileSceneContainer}"
+                                    Duration="0:0:0:1">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation
+                                    By="{Binding Source={x:Static local:App.ViewWidth}, Converter={x:Static converters:CommonConverters.MultiplyDoubleByNegativeOne}}"
+                                    Storyboard.TargetName="BackgroundContainer"
+                                    Storyboard.TargetProperty="(StackPanel.RenderTransform).(TranslateTransform.X)"
+                                    From="{Binding Path=RenderTransform.X, ElementName=TileSceneContainer}"
+                                    Duration="0:0:0:1">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
