@@ -72,14 +72,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\pfz.animationmanagement\Pfz.AnimationManagement.Wpf\Pfz.AnimationManagement.Wpf.csproj">
-      <Project>{916d0abc-7e3a-458f-81d4-604935da9ad5}</Project>
-      <Name>Pfz.AnimationManagement.Wpf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\pfz.animationmanagement\Pfz.AnimationManagement\Pfz.AnimationManagement.csproj">
-      <Project>{e01ba534-4d3e-4bfb-a91c-f26b846176c6}</Project>
-      <Name>Pfz.AnimationManagement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\WPFAspects\WPFAspects\WPFAspects.csproj">
       <Project>{6837cc1e-52ca-4092-8e91-97bf7d7585a3}</Project>
       <Name>WPFAspects</Name>

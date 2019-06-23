@@ -1,6 +1,3 @@
 [submodule "WPFAspects"]
 	path = WPFAspects
 	url = https://gitlab.com/jowenshelton-wpf-projects/WPFAspects.git
-[submodule "pfz.animationmanagement"]
-	path = pfz.animationmanagement
-	url = ../pfz.animationmanagement.git
