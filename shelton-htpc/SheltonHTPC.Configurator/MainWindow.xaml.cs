@@ -1,6 +1,4 @@
 ﻿using MahApps.Metro.Controls;
-using Pfz.AnimationManagement;
-using Pfz.AnimationManagement.Wpf;
 using ReactiveUI;
 using SheltonHTPC.NavigationContent;
 using System;
@@ -17,7 +15,6 @@ namespace SheltonHTPC
     {
         public MainWindow()
         {
-            Pfz.AnimationManagement.Wpf.Initializer.Initialize();
             Model = new MainWindowViewModel();
             this.DataContext = Model;
 
