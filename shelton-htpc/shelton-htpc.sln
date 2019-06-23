@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SheltonHTPCData", "SheltonHTPCData\SheltonHTPCData.csproj", "{510035F2-54A1-425A-B2E6-C6F0645D3184}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SheltonHTPC.Data", "SheltonHTPC.Data\SheltonHTPC.Data.csproj", "{510035F2-54A1-425A-B2E6-C6F0645D3184}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFAspects", "..\WPFAspects\WPFAspects\WPFAspects.csproj", "{6837CC1E-52CA-4092-8E91-97BF7D7585A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SheltonHTPCConfigurator", "SheltonHTPCConfigurator\SheltonHTPCConfigurator.csproj", "{F2B48B8B-C05F-4A35-859A-D38228D8BC3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SheltonHTPC.Configurator", "SheltonHTPC.Configurator\SheltonHTPC.Configurator.csproj", "{F2B48B8B-C05F-4A35-859A-D38228D8BC3F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfAspectTests", "..\WPFAspects\WpfAspectsTests\WpfAspectTests.csproj", "{30437C43-AE40-4A94-AA45-6CBB2116E326}"
 EndProject
@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pfz.AnimationManagement", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pfz.AnimationManagement.Wpf", "..\pfz.animationmanagement\Pfz.AnimationManagement.Wpf\Pfz.AnimationManagement.Wpf.csproj", "{916D0ABC-7E3A-458F-81D4-604935DA9AD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheltonHTPCCommon", "SheltonHTPCCommon\SheltonHTPCCommon.csproj", "{1A542123-BE0C-4608-A997-B2388C963FBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheltonHTPC.Common", "SheltonHTPC.Common\SheltonHTPC.Common.csproj", "{1A542123-BE0C-4608-A997-B2388C963FBC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{92DD525F-1786-490A-890E-D5B9C2F8D8B4}"
 EndProject
