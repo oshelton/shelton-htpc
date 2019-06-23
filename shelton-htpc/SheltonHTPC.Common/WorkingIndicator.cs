@@ -177,7 +177,6 @@ namespace SheltonHTPC.Common
                 else
                 {
                     this.Opacity = 1.0;
-                    await Dispatcher.InvokeAsync(() => ProgressIndicator.IsActive = true);
                 }
             }
 
@@ -197,7 +196,6 @@ namespace SheltonHTPC.Common
                 }
                 else
                 {
-                    ProgressIndicator.IsActive = false;
                     this.Visibility = Visibility.Collapsed;
                     this.Opacity = 0.0;
                 }
