@@ -53,7 +53,7 @@
   <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="2.3.0" />
-    <PackageReference Include="ReactiveUI.WPF" Version="9.12.1" />
+    <PackageReference Include="ReactiveUI.WPF" Version="9.17.11" />
   </ItemGroup>
 
   <ItemGroup>

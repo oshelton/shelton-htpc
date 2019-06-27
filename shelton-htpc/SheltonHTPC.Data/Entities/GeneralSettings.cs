@@ -13,7 +13,7 @@ namespace SheltonHTPC.Data.Entities
     /// <summary>
     /// Model for the general/non-specific settings for the application.
     /// </summary>
-    public class GeneralSettings: WPFAspects.Core.Model
+    public class GeneralSettings: WPFAspects.Core.Model, Interfaces.IGeneralSettings
     {
         /// <summary>
         /// Retrieve an instance of the GeneralSettings from the file system. 
