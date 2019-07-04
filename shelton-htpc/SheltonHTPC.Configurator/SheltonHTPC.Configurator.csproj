@@ -69,6 +69,7 @@
     <ProjectReference Include="..\..\WPFAspects\WPFAspects\WPFAspects.csproj" />
     <ProjectReference Include="..\SheltonHTPC.Common\SheltonHTPC.Common.csproj" />
     <ProjectReference Include="..\SheltonHTPC.Data\SheltonHTPC.Data.csproj" />
+    <ProjectReference Include="..\SheltonHTPC.Dtos\SheltonHTPC.Dtos.csproj" />
   </ItemGroup>
 
   <ItemGroup>

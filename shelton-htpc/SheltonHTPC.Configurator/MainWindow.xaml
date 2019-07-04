@@ -54,7 +54,7 @@
                     IsChecked="{Binding CurrentContentModel.Kind, Converter={x:Static converters:CommonConverters.ObjectsAreEqual}, ConverterParameter={x:Static content:ContentKind.Layout}, Mode=OneWay}"
                     Style="{StaticResource MainNavRoundButton}"
                     Tag="{x:Static content:ContentKind.Layout}"
-                    ToolTip="Scenes and Layout" />
+                    ToolTip="Layout and Scenes" />
 
                 <RadioButton
                     Name="MoviesButton"
@@ -159,6 +159,7 @@
                     <ResourceDictionary>
                         <ResourceDictionary.MergedDictionaries>
                             <ResourceDictionary Source="NavigationContent\GeneralSettingsView.xaml" />
+                            <ResourceDictionary Source="NavigationContent\LayoutView.xaml" />
                         </ResourceDictionary.MergedDictionaries>
                     </ResourceDictionary>
                 </ContentControl.Resources>
