@@ -73,6 +73,41 @@
                     </Border>
                 </Grid>
             </DataTemplate>
+
+            <DataTemplate x:Key="EnableMouseTemplate" DataType="{x:Type entities:GeneralSettings}">
+                <Grid
+                    Margin="8"
+                    VerticalAlignment="Top"
+                    gextra:GridEx.ColumnDefinition="*, *"
+                    gextra:GridEx.RowDefinition="*, *">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Style="{StaticResource SettingHeaderText}"
+                        Text="Enable Mouse:" />
+
+                    <CheckBox
+                        Grid.Column="1"
+                        Margin="0,3,0,3"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        gextra:GridEx.Area="0,1,1,1"
+                        IsChecked="{Binding EnableMouse}" />
+
+                    <Border
+                        HorizontalAlignment="Left"
+                        gextra:GridEx.Area="1,0,1,2"
+                        Style="{StaticResource InfoBox}">
+                        <FlowDocumentScrollViewer VerticalScrollBarVisibility="Hidden">
+                            <FlowDocument>
+                                <Paragraph>
+                                    When checked Shelton HTPC will allow for full mouse interaction, and the mouse cursor will be hidden after the mouse has not moved for 5 seconds.<LineBreak />
+                                    <LineBreak />
+                                    When unchecked the mouse cannot be used to interact with Shelton HTPC.</Paragraph>
+                            </FlowDocument>
+                        </FlowDocumentScrollViewer>
+                    </Border>
+                </Grid>
+            </DataTemplate>
         </DataTemplate.Resources>
 
         <gextra:ResponsiveGrid VerticalAlignment="Top">
@@ -82,7 +117,7 @@
                 gextra:ResponsiveGrid.SM="6"
                 gextra:ResponsiveGrid.XS="6"
                 Content="{Binding}"
-                ContentTemplate="{StaticResource RunOnStartupTemplate}" />
+                ContentTemplate="{StaticResource EnableMouseTemplate}" />
             <ContentControl
                 gextra:ResponsiveGrid.LG="4"
                 gextra:ResponsiveGrid.MD="4"
@@ -90,6 +125,13 @@
                 gextra:ResponsiveGrid.XS="6"
                 Content="{Binding}"
                 ContentTemplate="{StaticResource IdleTimeTemplate}" />
+            <ContentControl
+                gextra:ResponsiveGrid.LG="4"
+                gextra:ResponsiveGrid.MD="4"
+                gextra:ResponsiveGrid.SM="6"
+                gextra:ResponsiveGrid.XS="6"
+                Content="{Binding}"
+                ContentTemplate="{StaticResource RunOnStartupTemplate}" />
         </gextra:ResponsiveGrid>
     </DataTemplate>
 </ResourceDictionary>

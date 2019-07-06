@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using SheltonHTPC.Common.Utils;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SheltonHTPC.Data.Entities
@@ -42,17 +38,18 @@ namespace SheltonHTPC.Data.Entities
                             var jsonObj = (JObject)JToken.ReadFrom(reader);
 
                             results.DataPath = dataPathFileContents;
-                            results.RunOnStartup = (bool)jsonObj[nameof(RunOnStartup)];
-                            results.IdleWaitMinutes = (uint)jsonObj[nameof(IdleWaitMinutes)];
-                            results.EnableMovies = (bool)jsonObj[nameof(EnableMovies)];
-                            results.EnableSeries = (bool)jsonObj[nameof(EnableSeries)];
-                            results.EnableMusic = (bool)jsonObj[nameof(EnableMusic)];
-                            results.EnablePhotos = (bool)jsonObj[nameof(EnablePhotos)];
-                            results.EnableGames = (bool)jsonObj[nameof(EnableGames)];
-                            results.EnableWebAccess = (bool)jsonObj[nameof(EnableWebAccess)];
-                            results.EnableApplications = (bool)jsonObj[nameof(EnableApplications)];
-                            results.EnableWebSites = (bool)jsonObj[nameof(EnableWebSites)];
-                            results.EnableWidgets = (bool)jsonObj[nameof(EnableWidgets)];
+                            results.RunOnStartup = jsonObj.GetValueOrDefault(nameof(RunOnStartup), false);
+                            results.IdleWaitMinutes = jsonObj.GetValueOrDefault(nameof(IdleWaitMinutes), 15u);
+                            results.EnableMouse = jsonObj.GetValueOrDefault(nameof(EnableMouse), true);
+                            results.EnableMovies = jsonObj.GetValueOrDefault(nameof(EnableMovies), true);
+                            results.EnableSeries = jsonObj.GetValueOrDefault(nameof(EnableSeries), true);
+                            results.EnableMusic = jsonObj.GetValueOrDefault(nameof(EnableMusic), true);
+                            results.EnablePhotos = jsonObj.GetValueOrDefault(nameof(EnablePhotos), true);
+                            results.EnableGames = jsonObj.GetValueOrDefault(nameof(EnableGames), true);
+                            results.EnableWebAccess = jsonObj.GetValueOrDefault(nameof(EnableWebAccess), true);
+                            results.EnableApplications = jsonObj.GetValueOrDefault(nameof(EnableApplications), true);
+                            results.EnableWebSites = jsonObj.GetValueOrDefault(nameof(EnableWebSites), true);
+                            results.EnableWidgets = jsonObj.GetValueOrDefault(nameof(EnableWidgets), true);
                         }
                     }
                     else
@@ -89,6 +86,7 @@ namespace SheltonHTPC.Data.Entities
             var jsonRoot = new JObject();
             jsonRoot[nameof(RunOnStartup)] = _RunOnStartup;
             jsonRoot[nameof(IdleWaitMinutes)] = _IdleWaitMinutes;
+            jsonRoot[nameof(EnableMouse)] = _EnableMouse;
             jsonRoot[nameof(EnableMovies)] = _EnableMovies;
             jsonRoot[nameof(EnableSeries)] = _EnableSeries;
             jsonRoot[nameof(EnableMusic)] = _EnableMusic;
@@ -111,6 +109,7 @@ namespace SheltonHTPC.Data.Entities
                 _DataPath = this.DataPath,
                 _RunOnStartup = this.RunOnStartup,
                 _IdleWaitMinutes = this.IdleWaitMinutes,
+                _EnableMouse = this.EnableMouse,
                 _EnableMovies = this.EnableMovies,
                 _EnableSeries = this.EnableSeries,
                 _EnableMusic = this.EnableMusic,
@@ -128,6 +127,7 @@ namespace SheltonHTPC.Data.Entities
             _DataPath = other.DataPath;
             _RunOnStartup = other.RunOnStartup;
             _IdleWaitMinutes = other.IdleWaitMinutes;
+            _EnableMouse = other.EnableMouse;
             _EnableMovies = other.EnableMovies;
             _EnableSeries = other.EnableSeries;
             _EnableMusic = other.EnableMusic;
@@ -169,6 +169,16 @@ namespace SheltonHTPC.Data.Entities
         {
             get => _IdleWaitMinutes;
             set => SetPropertyBackingValue(value, ref _IdleWaitMinutes);
+        }
+
+        private bool _EnableMouse = true;
+        /// <summary>
+        /// Whether or not the mouse should be enabled.
+        /// </summary>
+        public bool EnableMouse
+        {
+            get => _EnableMouse;
+            set => SetPropertyBackingValue(value, ref _EnableMouse);
         }
 
         #region Feature switches.
