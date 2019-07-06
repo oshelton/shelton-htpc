@@ -33,6 +33,7 @@ namespace SheltonHTPC.NavigationContent.LayoutSections
         {
             return new EditableLayoutSettings()
             {
+                Id = this.Id,
                 _BackgroundRotationScheme = this.BackgroundRotationScheme
             };
         }

@@ -34,6 +34,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public LayoutSettings(LayoutSettingsDto settingsDto)
         {
+            Id = settingsDto.Id;
             switch (settingsDto.BackgroundRotationScheme)
             {
                 case Dtos.Layout.BackgroundRotationScheme.NONE:
@@ -51,7 +52,7 @@ namespace SheltonHTPC.Data.Entities
         /// <summary>
         /// Id of the settings object.
         /// </summary>
-        private Guid Id { get; set; }
+        protected Guid Id { get; set; }
 
         protected string _BackgroundRotationScheme = null;
         /// <summary>

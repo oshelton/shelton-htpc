@@ -51,6 +51,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GridExtra" Version="0.4.0" />
     <PackageReference Include="ImageProcessor" Version="2.7.0.100" />
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="2.3.0" />

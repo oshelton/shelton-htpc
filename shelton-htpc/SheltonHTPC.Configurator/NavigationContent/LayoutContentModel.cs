@@ -29,7 +29,7 @@ namespace SheltonHTPC.NavigationContent
                 {
                     dto = new LayoutSettingsDto
                     {
-                        Id = new Guid()
+                        Id = Guid.NewGuid()
                     };
                     LayoutDataManager.Repo.Insert(dto);
                 }
@@ -72,6 +72,7 @@ namespace SheltonHTPC.NavigationContent
 
         public override void OnReset(object sender, RoutedEventArgs args)
         {
+            SettingsTracker.ResetToInitialState();
         }
 
         public override ContentKind Kind => ContentKind.Layout;

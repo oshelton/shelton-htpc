@@ -10,12 +10,16 @@
                 <ResourceDictionary Source="pack://application:,,,/WPFAspects;component/Aspects.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/SheltonHTPC.Common;component/Common.xaml" />
 
-                <ResourceDictionary Source="pack://application:,,,/Assets/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Sienna.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/Assets/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Theme/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Theme/Text.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Theme/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
