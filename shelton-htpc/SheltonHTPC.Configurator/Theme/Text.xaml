@@ -8,4 +8,8 @@
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
+    <Style TargetType="{x:Type Paragraph}">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+    </Style>
 </ResourceDictionary>
