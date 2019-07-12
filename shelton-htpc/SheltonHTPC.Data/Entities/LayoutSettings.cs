@@ -22,8 +22,7 @@ namespace SheltonHTPC.Data.Entities
             StartupSchemeName,
             HourlySchemeName
         };
-
-
+        
         /// <summary>
         /// Default constructor so subclasses can create instances for duplication purposes.
         /// </summary>
@@ -60,7 +59,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public string BackgroundRotationScheme
         {
-            get => _BackgroundRotationScheme;
+            get => CheckIsOnMainThread(_BackgroundRotationScheme);
             set => SetPropertyBackingValue(value, ref _BackgroundRotationScheme);
         }
 
@@ -70,7 +69,7 @@ namespace SheltonHTPC.Data.Entities
         public LayoutSettingsDto CreateDto()
         {
             Dtos.Layout.BackgroundRotationScheme schemeToUse = Dtos.Layout.BackgroundRotationScheme.NONE;
-            switch (BackgroundRotationScheme)
+            switch (_BackgroundRotationScheme)
             {
                 case ManualSchemeName:
                     schemeToUse = Dtos.Layout.BackgroundRotationScheme.NONE;

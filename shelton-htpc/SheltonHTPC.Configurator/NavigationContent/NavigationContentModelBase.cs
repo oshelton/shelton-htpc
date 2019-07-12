@@ -1,4 +1,5 @@
 ﻿using SheltonHTPC.Data.Entities;
+using SheltonHTPC.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace SheltonHTPC.NavigationContent
     /// </summary>
     public abstract class NavigationContentModelBase : Model
     {
+        public NavigationContentModelBase(OngoingTaskManager taskManager)
+        {
+            OngoingTaskManager = taskManager;
+        }
+
         public abstract bool CanNavigateAway();
 
         public abstract Task Initialize(GeneralSettings generalSettings);
@@ -22,6 +28,8 @@ namespace SheltonHTPC.NavigationContent
         public abstract Task OnNavigatedAwayFrom();
         public abstract void OnSaved(object sender, RoutedEventArgs args);
         public abstract void OnReset(object sender, RoutedEventArgs args);
+
+        protected OngoingTaskManager OngoingTaskManager { get; }
 
         public abstract ContentKind Kind { get; }
     }

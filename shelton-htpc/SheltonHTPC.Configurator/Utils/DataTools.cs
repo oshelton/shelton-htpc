@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace SheltonHTPC.Utils
 {
-    public static class GeneralTools
+    public static class DataTools
     {
         public static async Task PurgeData(GeneralSettings settings)
         {

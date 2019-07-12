@@ -1,4 +1,5 @@
 ﻿using SheltonHTPC.Data.Entities;
+using SheltonHTPC.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace SheltonHTPC.NavigationContent
 {
     public class MusicContentModel : NavigationContentModelBase
     {
-        public MusicContentModel(){ }
+        public MusicContentModel(OngoingTaskManager taskManager)
+            : base(taskManager) { }
 
         public override bool CanNavigateAway() => true;
 

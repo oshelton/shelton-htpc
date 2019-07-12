@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SheltonHTPC.Common.Utils;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SheltonHTPC.Data.Entities
 {
@@ -37,23 +38,26 @@ namespace SheltonHTPC.Data.Entities
                         {
                             var jsonObj = (JObject)JToken.ReadFrom(reader);
 
-                            results.DataPath = dataPathFileContents;
-                            results.RunOnStartup = jsonObj.GetValueOrDefault(nameof(RunOnStartup), false);
-                            results.IdleWaitMinutes = jsonObj.GetValueOrDefault(nameof(IdleWaitMinutes), 15u);
-                            results.EnableMouse = jsonObj.GetValueOrDefault(nameof(EnableMouse), true);
-                            results.EnableMovies = jsonObj.GetValueOrDefault(nameof(EnableMovies), true);
-                            results.EnableSeries = jsonObj.GetValueOrDefault(nameof(EnableSeries), true);
-                            results.EnableMusic = jsonObj.GetValueOrDefault(nameof(EnableMusic), true);
-                            results.EnablePhotos = jsonObj.GetValueOrDefault(nameof(EnablePhotos), true);
-                            results.EnableGames = jsonObj.GetValueOrDefault(nameof(EnableGames), true);
-                            results.EnableWebAccess = jsonObj.GetValueOrDefault(nameof(EnableWebAccess), true);
-                            results.EnableApplications = jsonObj.GetValueOrDefault(nameof(EnableApplications), true);
-                            results.EnableWebSites = jsonObj.GetValueOrDefault(nameof(EnableWebSites), true);
-                            results.EnableWidgets = jsonObj.GetValueOrDefault(nameof(EnableWidgets), true);
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                results.DataPath = dataPathFileContents;
+                                results.RunOnStartup = jsonObj.GetValueOrDefault(nameof(RunOnStartup), false);
+                                results.IdleWaitMinutes = jsonObj.GetValueOrDefault(nameof(IdleWaitMinutes), 15u);
+                                results.EnableMouse = jsonObj.GetValueOrDefault(nameof(EnableMouse), true);
+                                results.EnableMovies = jsonObj.GetValueOrDefault(nameof(EnableMovies), true);
+                                results.EnableSeries = jsonObj.GetValueOrDefault(nameof(EnableSeries), true);
+                                results.EnableMusic = jsonObj.GetValueOrDefault(nameof(EnableMusic), true);
+                                results.EnablePhotos = jsonObj.GetValueOrDefault(nameof(EnablePhotos), true);
+                                results.EnableGames = jsonObj.GetValueOrDefault(nameof(EnableGames), true);
+                                results.EnableWebAccess = jsonObj.GetValueOrDefault(nameof(EnableWebAccess), true);
+                                results.EnableApplications = jsonObj.GetValueOrDefault(nameof(EnableApplications), true);
+                                results.EnableWebSites = jsonObj.GetValueOrDefault(nameof(EnableWebSites), true);
+                                results.EnableWidgets = jsonObj.GetValueOrDefault(nameof(EnableWidgets), true);
+                            });
                         }
                     }
                     else
-                        results.DataPath = Path.GetDirectoryName(dataPathFilePath);
+                        Application.Current.Dispatcher.Invoke(() => results.DataPath = Path.GetDirectoryName(dataPathFilePath));
 
                     return results;
                 }
@@ -61,7 +65,7 @@ namespace SheltonHTPC.Data.Entities
                 {
                     var results = new GeneralSettings()
                     {
-                        DataPath = Path.GetDirectoryName(dataPathFilePath),
+                        _DataPath = Path.GetDirectoryName(dataPathFilePath),
                     };
                     results.Serialize().Wait();
                     return results;
@@ -78,10 +82,10 @@ namespace SheltonHTPC.Data.Entities
             string dataPathFilePath = DataHelper.DataPathFilePath;
             if (!File.Exists(dataPathFilePath))
                 Directory.CreateDirectory(Path.GetDirectoryName(dataPathFilePath));
-            File.WriteAllText(dataPathFilePath, DataPath);
+            File.WriteAllText(dataPathFilePath, _DataPath);
 
             //Update the general settings.
-            string settingsFilePath = Path.Combine(DataPath, "GeneralSettings.json");
+            string settingsFilePath = Path.Combine(_DataPath, "GeneralSettings.json");
 
             var jsonRoot = new JObject();
             jsonRoot[nameof(RunOnStartup)] = _RunOnStartup;
@@ -147,7 +151,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public string DataPath
         {
-            get => _DataPath;
+            get => CheckIsOnMainThread(_DataPath);
             set => SetPropertyBackingValue(value, ref _DataPath);
         }
 
@@ -157,7 +161,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool RunOnStartup
         {
-            get => _RunOnStartup;
+            get => CheckIsOnMainThread(_RunOnStartup);
             set => SetPropertyBackingValue(value, ref _RunOnStartup);
         }
 
@@ -167,7 +171,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public uint IdleWaitMinutes
         {
-            get => _IdleWaitMinutes;
+            get => CheckIsOnMainThread(_IdleWaitMinutes);
             set => SetPropertyBackingValue(value, ref _IdleWaitMinutes);
         }
 
@@ -177,7 +181,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableMouse
         {
-            get => _EnableMouse;
+            get => CheckIsOnMainThread(_EnableMouse);
             set => SetPropertyBackingValue(value, ref _EnableMouse);
         }
 
@@ -188,7 +192,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableMovies
         {
-            get => _EnableMovies;
+            get => CheckIsOnMainThread(_EnableMovies);
             set => SetPropertyBackingValue(value, ref _EnableMovies);
         }
 
@@ -198,7 +202,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableSeries
         {
-            get => _EnableSeries;
+            get => CheckIsOnMainThread(_EnableSeries);
             set => SetPropertyBackingValue(value, ref _EnableSeries);
         }
 
@@ -208,7 +212,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableMusic
         {
-            get => _EnableMusic;
+            get => CheckIsOnMainThread(_EnableMusic);
             set => SetPropertyBackingValue(value, ref _EnableMusic);
         }
 
@@ -218,7 +222,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnablePhotos
         {
-            get => _EnablePhotos;
+            get => CheckIsOnMainThread(_EnablePhotos);
             set => SetPropertyBackingValue(value, ref _EnablePhotos);
         }
 
@@ -228,7 +232,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableGames
         {
-            get => _EnableGames;
+            get => CheckIsOnMainThread(_EnableGames);
             set => SetPropertyBackingValue(value, ref _EnableGames);
         }
 
@@ -238,7 +242,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableWebAccess
         {
-            get => _EnableWebAccess;
+            get => CheckIsOnMainThread(_EnableWebAccess);
             set => SetPropertyBackingValue(value, ref _EnableWebAccess);
         }
 
@@ -248,7 +252,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableApplications
         {
-            get => _EnableApplications;
+            get => CheckIsOnMainThread(_EnableApplications);
             set => SetPropertyBackingValue(value, ref _EnableApplications);
         }
 
@@ -258,7 +262,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableWebSites
         {
-            get => _EnableWebSites;
+            get => CheckIsOnMainThread(_EnableWebSites);
             set => SetPropertyBackingValue(value, ref _EnableWebSites);
         }
 
@@ -268,7 +272,7 @@ namespace SheltonHTPC.Data.Entities
         /// </summary>
         public bool EnableWidgets
         {
-            get => _EnableWidgets;
+            get => CheckIsOnMainThread(_EnableWidgets);
             set => SetPropertyBackingValue(value, ref _EnableWidgets);
         }
         #endregion

@@ -1,4 +1,5 @@
 ﻿using SheltonHTPC.Data.Entities;
+using SheltonHTPC.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace SheltonHTPC.NavigationContent
 {
     public class GeneralSettingsContentModel : NavigationContentModelBase
     {
+        public GeneralSettingsContentModel(OngoingTaskManager taskManager)
+            : base(taskManager) { }
+
         public override bool CanNavigateAway() => true;
 
         public override Task Initialize(GeneralSettings generalSettings)
@@ -45,14 +49,20 @@ namespace SheltonHTPC.NavigationContent
             return Task.CompletedTask;
         }
 
-        public override void OnSaved(object sender, RoutedEventArgs args)
+        public override async void OnSaved(object sender, RoutedEventArgs args)
         {
             _PersistedGeneralSettings.MergeChangesFromOther(BeingEditedSettingsModel);
 
+            IsSavingData = true;
             var justEdited = BeingEditedSettingsModel.Duplicate();
-            Task.Run(() => justEdited.Serialize());
+
+            await OngoingTaskManager.CreateAndStartOngoingTask("Saving General Information", OngoingTaskModel.ProgressDisplayKind.INDETERMINATE, taskModel =>
+            {
+                justEdited.Serialize();
+            }).Task;
 
             SettingsTracker.SetInitialState();
+            IsSavingData = false;
         }
 
         public override void OnReset(object sender, RoutedEventArgs args)
@@ -68,7 +78,7 @@ namespace SheltonHTPC.NavigationContent
         /// </summary>
         public GeneralSettings BeingEditedSettingsModel
         {
-            get => _BeingEditedSettingsModel;
+            get => CheckIsOnMainThread(_BeingEditedSettingsModel);
             set => SetPropertyBackingValue(value, ref _BeingEditedSettingsModel);
         }
 
@@ -78,7 +88,7 @@ namespace SheltonHTPC.NavigationContent
         /// </summary>
         public DirtyTracker SettingsTracker
         {
-            get => _SettingsTracker;
+            get => CheckIsOnMainThread(_SettingsTracker);
             set => SetPropertyBackingValue(value, ref _SettingsTracker);
         }
 
@@ -88,7 +98,7 @@ namespace SheltonHTPC.NavigationContent
         /// </summary>
         public DirtyTrackingGroup SettingsTabTracker
         {
-            get => _SettingsTabTracker;
+            get => CheckIsOnMainThread(_SettingsTabTracker);
             set => SetPropertyBackingValue(value, ref _SettingsTabTracker);
         }
 
@@ -98,8 +108,18 @@ namespace SheltonHTPC.NavigationContent
         /// </summary>
         public DirtyTrackingGroup FeaturesTabTracker
         {
-            get => _FeaturesTabTracker;
+            get => CheckIsOnMainThread(_FeaturesTabTracker);
             set => SetPropertyBackingValue(value, ref _FeaturesTabTracker);
+        }
+
+        private bool _IsSavingData = false;
+        /// <summary>
+        /// Whether or not data is currently being saved.
+        /// </summary>
+        public bool IsSavingData
+        {
+            get => CheckIsOnMainThread(_IsSavingData);
+            set => SetPropertyBackingValue(value, ref _IsSavingData);
         }
 
         private GeneralSettings _PersistedGeneralSettings = null;

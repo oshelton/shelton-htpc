@@ -1,10 +1,8 @@
 ﻿using SheltonHTPC.Data.Entities;
 using SheltonHTPC.Dtos.Layout;
 using SheltonHTPC.NavigationContent.LayoutSections;
+using SheltonHTPC.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WPFAspects.Core;
@@ -13,7 +11,8 @@ namespace SheltonHTPC.NavigationContent
 {
     public class LayoutContentModel : NavigationContentModelBase
     {
-        public LayoutContentModel(){ }
+        public LayoutContentModel(OngoingTaskManager taskManager)
+            : base(taskManager) { }
 
         public override bool CanNavigateAway() => true;
 
@@ -21,9 +20,10 @@ namespace SheltonHTPC.NavigationContent
         {
             _GeneralSettings = generalSettings;
 
+            string dataPath = generalSettings.DataPath;
             return Task.Run(() =>
             {
-                LayoutDataManager.UpdateDataDirectory(generalSettings.DataPath);
+                LayoutDataManager.UpdateDataDirectory(dataPath);
                 var dto = LayoutDataManager.Repo.FirstOrDefault<LayoutSettingsDto>(collectionName: LayoutSettingsDto.CollectionName);
                 if (dto == null)
                 {
@@ -34,8 +34,11 @@ namespace SheltonHTPC.NavigationContent
                     LayoutDataManager.Repo.Insert(dto);
                 }
 
-                var viewModel = new EditableLayoutSettings(dto);
-                _PersistedSettings = viewModel;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var viewModel = new EditableLayoutSettings(dto);
+                    _PersistedSettings = viewModel;
+                });
             });
         }
 
@@ -56,18 +59,21 @@ namespace SheltonHTPC.NavigationContent
             return Task.CompletedTask;
         }
 
-        public override void OnSaved(object sender, RoutedEventArgs args)
+        public override async void OnSaved(object sender, RoutedEventArgs args)
         {
             _PersistedSettings.MergeChangesFromOther(BeingEditedSettingsModel);
 
+            IsSavingData = true;
             var justEdited = BeingEditedSettingsModel.Duplicate();
-            Task.Run(() =>
+
+            await OngoingTaskManager.CreateAndStartOngoingTask("Updating Layout Info", OngoingTaskModel.ProgressDisplayKind.INDETERMINATE, taskModel =>
             {
                 var dto = justEdited.CreateDto();
                 LayoutDataManager.Repo.Update(dto, collectionName: LayoutSettingsDto.CollectionName);
-            });
+            }).Task;
 
             SettingsTracker.SetInitialState();
+            IsSavingData = false;
         }
 
         public override void OnReset(object sender, RoutedEventArgs args)
@@ -83,7 +89,7 @@ namespace SheltonHTPC.NavigationContent
         /// </summary>
         public EditableLayoutSettings BeingEditedSettingsModel
         {
-            get => _BeingEditedSettingsModel;
+            get => CheckIsOnMainThread(_BeingEditedSettingsModel);
             set => SetPropertyBackingValue(value, ref _BeingEditedSettingsModel);
         }
 
@@ -93,8 +99,18 @@ namespace SheltonHTPC.NavigationContent
         /// </summary>
         public DirtyTracker SettingsTracker
         {
-            get => _SettingsTracker;
+            get => CheckIsOnMainThread(_SettingsTracker);
             set => SetPropertyBackingValue(value, ref _SettingsTracker);
+        }
+
+        private bool _IsSavingData = false;
+        /// <summary>
+        /// Whether or not data is currently being saved.
+        /// </summary>
+        public bool IsSavingData
+        {
+            get => CheckIsOnMainThread(_IsSavingData);
+            set => SetPropertyBackingValue(value, ref _IsSavingData);
         }
 
         private GeneralSettings _GeneralSettings = null;
