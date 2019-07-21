@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicImageManipulation", "e
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheltonHTPC.Dtos", "SheltonHTPC.Dtos\SheltonHTPC.Dtos.csproj", "{BBA1CB76-E1FB-4D38-A012-61D5A9675A33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLCSharpExample", "examples\VLCSharpExample\VLCSharpExample.csproj", "{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,14 @@ Global
 		{BBA1CB76-E1FB-4D38-A012-61D5A9675A33}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BBA1CB76-E1FB-4D38-A012-61D5A9675A33}.Release|x64.ActiveCfg = Release|Any CPU
 		{BBA1CB76-E1FB-4D38-A012-61D5A9675A33}.Release|x64.Build.0 = Release|Any CPU
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}.Debug|x64.Build.0 = Debug|Any CPU
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}.Release|x64.ActiveCfg = Release|Any CPU
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +145,7 @@ Global
 		{0AF07F51-16D2-49EE-90AF-D0BE0CFE4A8D} = {92DD525F-1786-490A-890E-D5B9C2F8D8B4}
 		{1679712F-1BBC-4D3E-BF22-8EF17894CE3D} = {92DD525F-1786-490A-890E-D5B9C2F8D8B4}
 		{D7C4D9DF-0F49-463C-9B07-42E5719FDF6B} = {92DD525F-1786-490A-890E-D5B9C2F8D8B4}
+		{BA11C3F5-8D54-4CC4-93BB-DB0F9A305D87} = {92DD525F-1786-490A-890E-D5B9C2F8D8B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27E9DCD8-9D3C-4823-B722-C27A355F4F7A}
