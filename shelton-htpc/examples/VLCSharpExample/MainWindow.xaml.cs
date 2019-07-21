@@ -43,6 +43,7 @@ namespace VLCSharpExample
             _LibVLC = new LibVLC();
             _MediaPlayer = new MediaPlayer(_LibVLC);
             _MediaPlayer.PositionChanged += _MediaPlayer_PositionChanged;
+            _MediaPlayer.SnapshotTaken += _MediaPlayer_SnapshotTaken;
 
             videoView.MediaPlayer = _MediaPlayer;
         }
@@ -53,6 +54,11 @@ namespace VLCSharpExample
             {
                 playbackText.Text = $"{TimeSpan.FromMilliseconds(e.Position * _MediaPlayer.Media.Duration).ToString(@"hh\:mm\:ss")} / {TimeSpan.FromMilliseconds(_MediaPlayer.Media.Duration).ToString(@"hh\:mm\:ss")}";
             });
+        }
+
+        private void _MediaPlayer_SnapshotTaken(object sender, MediaPlayerSnapshotTakenEventArgs e)
+        {
+            Console.WriteLine(e.Filename);
         }
 
         private void DvdButton_Click(object sender, RoutedEventArgs e)
@@ -80,6 +86,12 @@ namespace VLCSharpExample
 
             if (dialog.ShowDialog() ?? false)
                 _MediaPlayer.Play(new Media(_LibVLC, dialog.FileName, FromType.FromPath));
+        }
+
+        private void SnapshotButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Snapshots can only be taken when a video output is present.  The snapshot will correspond to the current position in the video.
+            _MediaPlayer.TakeSnapshot(0, System.IO.Path.GetTempFileName(), 128, 0);
         }
     }
 }

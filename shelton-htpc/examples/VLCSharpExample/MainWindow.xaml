@@ -40,6 +40,11 @@
                             Width="96"
                             Click="AudioButton_Click"
                             Content="Play Audio" />
+                        <Button
+                            Name="snapshotButton"
+                            Width="96"
+                            Click="SnapshotButton_Click"
+                            Content="Take Snapshot" />
                     </StackPanel>
                 </Border>
 
@@ -48,7 +53,10 @@
                         <SolidColorBrush Opacity="0.6" Color="Black" />
                     </Border.Background>
 
-                    <TextBlock Name="playbackText" Foreground="White" Margin="8" />
+                    <TextBlock
+                        Name="playbackText"
+                        Margin="8"
+                        Foreground="White" />
                 </Border>
             </DockPanel>
         </vlc:VideoView>
