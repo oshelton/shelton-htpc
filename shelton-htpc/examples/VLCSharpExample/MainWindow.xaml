@@ -12,29 +12,45 @@
     mc:Ignorable="d">
     <Grid>
         <vlc:VideoView Name="videoView">
-            <StackPanel
-                Margin="8"
-                VerticalAlignment="Top"
-                Orientation="Horizontal">
-                <Button
-                    Name="dvdButton"
-                    Width="96"
-                    Margin="0,0,4,0"
-                    Click="DvdButton_Click"
-                    Content="Play DVD"
-                    IsEnabled="{Binding HasDvdDrive}" />
-                <Button
-                    Name="videoButton"
-                    Width="96"
-                    Margin="0,0,4,0"
-                    Click="VideoButton_Click"
-                    Content="Play Video" />
-                <Button
-                    Name="audioButton"
-                    Width="96"
-                    Click="AudioButton_Click"
-                    Content="Play Audio" />
-            </StackPanel>
+            <DockPanel LastChildFill="False">
+                <Border DockPanel.Dock="Top">
+                    <Border.Background>
+                        <SolidColorBrush Opacity="0.6" Color="Black" />
+                    </Border.Background>
+
+                    <StackPanel
+                        Margin="8"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                        <Button
+                            Name="dvdButton"
+                            Width="96"
+                            Margin="0,0,4,0"
+                            Click="DvdButton_Click"
+                            Content="Play DVD"
+                            IsEnabled="{Binding HasDvdDrive}" />
+                        <Button
+                            Name="videoButton"
+                            Width="96"
+                            Margin="0,0,4,0"
+                            Click="VideoButton_Click"
+                            Content="Play Video" />
+                        <Button
+                            Name="audioButton"
+                            Width="96"
+                            Click="AudioButton_Click"
+                            Content="Play Audio" />
+                    </StackPanel>
+                </Border>
+
+                <Border DockPanel.Dock="Bottom">
+                    <Border.Background>
+                        <SolidColorBrush Opacity="0.6" Color="Black" />
+                    </Border.Background>
+
+                    <TextBlock Name="playbackText" Foreground="White" Margin="8" />
+                </Border>
+            </DockPanel>
         </vlc:VideoView>
     </Grid>
 </Window>

@@ -42,8 +42,17 @@ namespace VLCSharpExample
 
             _LibVLC = new LibVLC();
             _MediaPlayer = new MediaPlayer(_LibVLC);
+            _MediaPlayer.PositionChanged += _MediaPlayer_PositionChanged;
 
             videoView.MediaPlayer = _MediaPlayer;
+        }
+
+        private void _MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e)
+        {
+            Dispatcher.InvokeAsync(() =>
+            {
+                playbackText.Text = $"{TimeSpan.FromMilliseconds(e.Position * _MediaPlayer.Media.Duration).ToString(@"hh\:mm\:ss")} / {TimeSpan.FromMilliseconds(_MediaPlayer.Media.Duration).ToString(@"hh\:mm\:ss")}";
+            });
         }
 
         private void DvdButton_Click(object sender, RoutedEventArgs e)
