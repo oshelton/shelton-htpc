@@ -60,7 +60,7 @@ namespace SheltonHTPC
             {
                 if (CurrentContentModel != null && !CurrentContentModel.CanNavigateAway())
                 {
-                    //TODO: Confirm, clean up, etc...
+                    //TODO Issue #29: Confirm, clean up, etc...
                 }
                 else
                     CurrentContentModel = newContent;
