@@ -25,10 +25,7 @@ namespace SheltonHTPC.Utils
 
         public OngoingTaskModel(Action<OngoingTaskModel> taskToRun)
         {
-            if (taskToRun == null)
-                throw new ArgumentException($"{nameof(taskToRun)} cannot be null.");
-
-            _TaskToRun = taskToRun;
+            _TaskToRun = taskToRun ?? throw new ArgumentException($"{nameof(taskToRun)} cannot be null.");
         }
 
         public async void Start()
@@ -38,7 +35,7 @@ namespace SheltonHTPC.Utils
 
             _HasRan = true;
             Task = Task.Run(() => _TaskToRun(this));
-            await Task;
+            await Task.ConfigureAwait(true);
 
             Application.Current.Dispatcher.Invoke(() => TaskFinished?.Invoke(this, EventArgs.Empty));
         }

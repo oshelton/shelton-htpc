@@ -1,15 +1,9 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:content="clr-namespace:SheltonHTPC.NavigationContent"
-    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:entities="clr-namespace:SheltonHTPC.Data.Entities;assembly=SheltonHTPC.Data"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    xmlns:sections="clr-namespace:SheltonHTPC.NavigationContent.GeneralSettingsSections">
 
-    <DataTemplate x:Key="InputSection" DataType="{x:Type entities:GeneralSettings}">
+    <DataTemplate DataType="{x:Type sections:InputSectionModel}">
         <StackPanel>
             <TextBlock TextWrapping="Wrap">This tab allows the setting and viewing of various keyboard and mouse application shortcuts.</TextBlock>
         </StackPanel>

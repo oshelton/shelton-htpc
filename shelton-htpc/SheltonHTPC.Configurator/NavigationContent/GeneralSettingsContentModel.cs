@@ -1,7 +1,9 @@
 ﻿using SheltonHTPC.Data.Entities;
+using SheltonHTPC.NavigationContent.GeneralSettingsSections;
 using SheltonHTPC.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,77 +12,24 @@ using WPFAspects.Core;
 
 namespace SheltonHTPC.NavigationContent
 {
-    public class GeneralSettingsContentModel : NavigationContentModelBase
+    public class GeneralSettingsContentModel : NavigationContentModelBase<GeneralSettingsContentModel>
     {
         public GeneralSettingsContentModel(OngoingTaskManager taskManager)
-            : base(taskManager) { }
-
-        public override bool CanNavigateAway() => true;
-
-        public override Task Initialize(GeneralSettings generalSettings)
+            : base(taskManager)
         {
-            _PersistedGeneralSettings = generalSettings;
-
-            return Task.CompletedTask;
-        }
-
-        public override Task OnNavigatedTo()
-        {
-            BeingEditedSettingsModel = _PersistedGeneralSettings.Duplicate();
-
-            SettingsTracker = new DirtyTracker(BeingEditedSettingsModel);
-            SettingsTabTracker = SettingsTracker.CreateDirtyTrackingGroup("SettingsTab",
-                nameof(BeingEditedSettingsModel.DataPath), nameof(BeingEditedSettingsModel.RunOnStartup), nameof(BeingEditedSettingsModel.IdleWaitMinutes));
-            FeaturesTabTracker = SettingsTracker.CreateDirtyTrackingGroup("FeaturesTab",
-                nameof(BeingEditedSettingsModel.EnableMovies), nameof(BeingEditedSettingsModel.EnableSeries), nameof(BeingEditedSettingsModel.EnableMusic), nameof(BeingEditedSettingsModel.EnablePhotos),
-                nameof(BeingEditedSettingsModel.EnableGames), nameof(BeingEditedSettingsModel.EnableWebAccess), nameof(BeingEditedSettingsModel.EnableApplications), nameof(BeingEditedSettingsModel.EnableWebSites),
-                nameof(BeingEditedSettingsModel.EnableWidgets));
-
-            return Task.CompletedTask;
-        }
-
-        public override Task OnNavigatedAwayFrom()
-        {
-            SettingsTabTracker = null;
-            FeaturesTabTracker = null;
-            SettingsTracker.Dispose();
-            BeingEditedSettingsModel = null;
-
-            return Task.CompletedTask;
-        }
-
-        public override async void OnSaved(object sender, RoutedEventArgs args)
-        {
-            _PersistedGeneralSettings.MergeChangesFromOther(BeingEditedSettingsModel);
-
-            IsSavingData = true;
-            var justEdited = BeingEditedSettingsModel.Duplicate();
-
-            await OngoingTaskManager.CreateAndStartOngoingTask("Saving General Information", OngoingTaskModel.ProgressDisplayKind.INDETERMINATE, taskModel =>
+            Sections = new ReadOnlyCollection<NavigationSectionModelBase<GeneralSettingsContentModel>>(new NavigationSectionModelBase<GeneralSettingsContentModel>[]
             {
-                justEdited.Serialize();
-            }).Task;
-
-            SettingsTracker.SetInitialState();
-            IsSavingData = false;
-        }
-
-        public override void OnReset(object sender, RoutedEventArgs args)
-        {
-            SettingsTracker.ResetToInitialState();
+                new HomeSectionModel(this),
+                new SettingsSectionModel(this),
+                new FeaturesSectionModel(this),
+                new ToolsSectionModel(this),
+                new InputSectionModel(this)
+            });
         }
 
         public override ContentKind Kind => ContentKind.GeneralSettings;
 
-        private GeneralSettings _BeingEditedSettingsModel;
-        /// <summary>
-        /// The GeneralSettings model being edited currently.
-        /// </summary>
-        public GeneralSettings BeingEditedSettingsModel
-        {
-            get => CheckIsOnMainThread(_BeingEditedSettingsModel);
-            set => SetPropertyBackingValue(value, ref _BeingEditedSettingsModel);
-        }
+        public override ReadOnlyCollection<NavigationSectionModelBase<GeneralSettingsContentModel>> Sections { get; }
 
         private DirtyTracker _SettingsTracker;
         /// <summary>
@@ -92,34 +41,64 @@ namespace SheltonHTPC.NavigationContent
             set => SetPropertyBackingValue(value, ref _SettingsTracker);
         }
 
-        private DirtyTrackingGroup _SettingsTabTracker = null;
+        private GeneralSettings _BeingEditedSettingsModel;
         /// <summary>
-        /// Get whether or not there have been any changes made to the settings tab.
+        /// The GeneralSettings model being edited currently.
         /// </summary>
-        public DirtyTrackingGroup SettingsTabTracker
+        public GeneralSettings BeingEditedSettingsModel
         {
-            get => CheckIsOnMainThread(_SettingsTabTracker);
-            set => SetPropertyBackingValue(value, ref _SettingsTabTracker);
+            get => CheckIsOnMainThread(_BeingEditedSettingsModel);
+            set => SetPropertyBackingValue(value, ref _BeingEditedSettingsModel);
         }
 
-        private DirtyTrackingGroup _FeaturesTabTracker = null;
-        /// <summary>
-        /// Get whether or not there have been any changes made to the features tab.
-        /// </summary>
-        public DirtyTrackingGroup FeaturesTabTracker
+        public override Task Initialize(GeneralSettings generalSettings)
         {
-            get => CheckIsOnMainThread(_FeaturesTabTracker);
-            set => SetPropertyBackingValue(value, ref _FeaturesTabTracker);
+            _PersistedGeneralSettings = generalSettings;
+
+            return base.Initialize(generalSettings);
         }
 
-        private bool _IsSavingData = false;
-        /// <summary>
-        /// Whether or not data is currently being saved.
-        /// </summary>
-        public bool IsSavingData
+        protected override Task OnNavigatedToCore()
         {
-            get => CheckIsOnMainThread(_IsSavingData);
-            set => SetPropertyBackingValue(value, ref _IsSavingData);
+            BeingEditedSettingsModel = _PersistedGeneralSettings.Duplicate();
+
+            SettingsTracker = new DirtyTracker(BeingEditedSettingsModel);
+
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnNavigatedAwayFromCore()
+        {
+            SettingsTracker.Dispose();
+            BeingEditedSettingsModel = null;
+
+            return Task.CompletedTask;
+        }
+
+        protected override async Task OnSavedCore(object sender, RoutedEventArgs args)
+        {
+            if (SettingsTracker.IsDirty)
+            {
+                _PersistedGeneralSettings.MergeChangesFromOther(BeingEditedSettingsModel);
+
+                var justEdited = BeingEditedSettingsModel.Duplicate();
+
+                OngoingTaskManager.CreateAndStartOngoingTask("Saving General Information", OngoingTaskModel.ProgressDisplayKind.INDETERMINATE, taskModel =>
+                {
+                    justEdited.Serialize();
+                });
+
+                SettingsTracker.SetInitialState();
+            }
+
+            await base.OnSavedCore(sender, args).ConfigureAwait(true);
+        }
+
+        public override void OnReset(object sender, RoutedEventArgs args)
+        {
+            SettingsTracker.ResetToInitialState();
+
+            base.OnReset(sender, args);
         }
 
         private GeneralSettings _PersistedGeneralSettings = null;

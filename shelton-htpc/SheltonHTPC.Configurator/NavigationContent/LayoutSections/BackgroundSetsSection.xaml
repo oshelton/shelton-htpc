@@ -1,0 +1,349 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:aspectControls="clr-namespace:WPFAspects.Controls;assembly=WPFAspects"
+    xmlns:common="clr-namespace:SheltonHTPC.Common;assembly=SheltonHTPC.Common"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
+    xmlns:entities="clr-namespace:SheltonHTPC.Data.Entities;assembly=SheltonHTPC.Data"
+    xmlns:gextra="clr-namespace:SourceChord.GridExtra;assembly=GridExtra.Wpf"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:section="clr-namespace:SheltonHTPC.NavigationContent.LayoutSections"
+    xmlns:utils="clr-namespace:WPFAspects.Utils;assembly=WPFAspects">
+
+    <Style
+        x:Key="SetOperationRoundButton"
+        BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="{StaticResource SmallMarginLeft}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Height" Value="24" />
+    </Style>
+
+    <Style x:Key="SetOperationContainer" TargetType="{x:Type StackPanel}">
+        <Setter Property="Visibility" Value="Hidden" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsKeyboardFocusWithin, ElementName=ItemContainer}" Value="True">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ItemContainer}" Value="True">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <DataTemplate DataType="{x:Type section:BackgroundSetsSectionModel}">
+        <DockPanel>
+            <TextBlock
+                Margin="{StaticResource MarginBottom}"
+                VerticalAlignment="Top"
+                DockPanel.Dock="Top"
+                TextWrapping="Wrap">
+                Background Sets represent collections of images to be used as backgrounds for scenes.  How background sets are rotated can be specified in the settings tab.
+            </TextBlock>
+
+            <TextBlock
+                Margin="{StaticResource MarginTop}"
+                DockPanel.Dock="Bottom"
+                TextWrapping="Wrap">
+                If a set has fewer backgrounds than scenes backgrounds will be reused for the scenes after the last background.
+            </TextBlock>
+
+            <Border
+                BorderBrush="Black"
+                BorderThickness="1"
+                DockPanel.Dock="Top">
+                <Grid>
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding BackgroundSets.Count, Converter={x:Static converters:CommonConverters.ObjectsAreEqualOrCollapsed}, ConverterParameter={utils:Int32 0}}">
+                        <TextBlock Style="{StaticResource HintTextStyle}" TextAlignment="Center">
+                            <Run>No background sets have been created.</Run><LineBreak />
+                            <Run>All scenes will have black backgrounds until at least one is created.</Run><LineBreak />
+                            <Run>Click the button below to create a Background Set.</Run>
+                        </TextBlock>
+
+                        <Button
+                            Name="CreateFirstButton"
+                            Margin="{StaticResource MarginAround}"
+                            HorizontalAlignment="Center"
+                            controls:ButtonHelper.PreserveTextCase="True"
+                            Click="{utils:EventBinding CreateBackgroundSet}"
+                            Content="Create Background Set"
+                            Style="{StaticResource SquareButtonStyle}"
+                            ToolTip="Create a new background set." />
+                    </StackPanel>
+
+                    <ScrollViewer Name="BackgroundSetsContainer" Visibility="{Binding BackgroundSets.Count, Converter={x:Static converters:CommonConverters.ObjectsNotEqualOrCollapsed}, ConverterParameter={utils:Int32 0}}">
+                        <DockPanel LastChildFill="False">
+                            <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding BackgroundSets}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type section:EditableBackgroundSet}">
+                                        <Border
+                                            Name="ItemContainer"
+                                            Margin="{StaticResource MarginLeftRight}"
+                                            Background="White"
+                                            BorderBrush="Gray"
+                                            BorderThickness="0,0,0,0.5">
+                                            <DockPanel Margin="{StaticResource MarginAround}">
+                                                <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                                                    <TextBox
+                                                        MinWidth="256"
+                                                        MaxWidth="256"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top"
+                                                        IsHitTestVisible="True"
+                                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Delay=100}" />
+
+                                                    <ComboBox
+                                                        Width="156"
+                                                        Margin="{StaticResource MarginLeft}"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top"
+                                                        ItemsSource="{x:Static section:EditableBackgroundSet.BackgroundSetStyles}"
+                                                        SelectedItem="{Binding Style}" />
+
+                                                    <Border
+                                                        Margin="{StaticResource MarginLeft}"
+                                                        Padding="{StaticResource SmallMarginAround}"
+                                                        Background="{StaticResource AccentColorBrush3}"
+                                                        CornerRadius="4"
+                                                        Visibility="{Binding IsNext, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}">
+                                                        <TextBlock VerticalAlignment="Center" Text="Next" />
+                                                    </Border>
+
+                                                    <StackPanel Style="{StaticResource SetOperationContainer}">
+                                                        <Button
+                                                            Height="26"
+                                                            Margin="{StaticResource MarginLeft}"
+                                                            controls:ButtonHelper.PreserveTextCase="True"
+                                                            Click="{utils:EventBinding MakeThisSetNext,
+                                                                                       Source={x:Reference BackgroundSetsContainer}}"
+                                                            Content="Make Next"
+                                                            Style="{StaticResource SquareButtonStyle}"
+                                                            Tag="{Binding}"
+                                                            ToolTip="Make this background set the next one to be used."
+                                                            Visibility="{Binding IsNext, Converter={x:Static converters:CommonConverters.BooleanTrueToVisibilityCollapsed}}" />
+                                                    </StackPanel>
+
+                                                    <StackPanel
+                                                        HorizontalAlignment="Right"
+                                                        DockPanel.Dock="Right"
+                                                        Orientation="Horizontal"
+                                                        Style="{StaticResource SetOperationContainer}">
+                                                        <Button
+                                                            Background="LightSalmon"
+                                                            Click="{utils:EventBinding DeleteThisSet}"
+                                                            Content="{iconPacks:FontAwesome Kind=BanSolid,
+                                                                                            Width=12,
+                                                                                            Height=12}"
+                                                            DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                            Style="{StaticResource SetOperationRoundButton}"
+                                                            Tag="{Binding DataContext, ElementName=ItemContainer}"
+                                                            ToolTip="Delete this background set." />
+
+                                                        <Rectangle Width="{StaticResource LargeMarginValue}" />
+
+                                                        <Border Visibility="{Binding CanMoveUp, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityHidden}}">
+                                                            <Button
+                                                                Background="LightCyan"
+                                                                Click="{utils:EventBinding MoveUp}"
+                                                                Content="{iconPacks:FontAwesome Kind=ArrowUpSolid,
+                                                                                                Width=12,
+                                                                                                Height=12}"
+                                                                DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                                Style="{StaticResource SetOperationRoundButton}"
+                                                                Tag="{Binding DataContext, ElementName=ItemContainer}"
+                                                                ToolTip="Move this background set up in the list." />
+                                                        </Border>
+
+                                                        <Border Visibility="{Binding CanMoveDown, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityHidden}}">
+                                                            <Button
+                                                                Background="LightCyan"
+                                                                Click="{utils:EventBinding MoveDown}"
+                                                                Content="{iconPacks:FontAwesome Kind=ArrowDownSolid,
+                                                                                                Width=12,
+                                                                                                Height=12}"
+                                                                DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                                Style="{StaticResource SetOperationRoundButton}"
+                                                                Tag="{Binding DataContext, ElementName=ItemContainer}"
+                                                                ToolTip="Move this background set down in the list." />
+                                                        </Border>
+                                                    </StackPanel>
+                                                </DockPanel>
+
+                                                <ItemsControl
+                                                    Name="ImageContainer"
+                                                    Margin="{StaticResource MarginAround}"
+                                                    VerticalAlignment="Bottom"
+                                                    DockPanel.Dock="Bottom">
+                                                    <ItemsControl.Resources>
+                                                        <CollectionViewSource x:Key="ImagesResource" Source="{Binding Images}" />
+
+                                                        <DataTemplate DataType="{x:Type section:EditableBackgroundSetImage}">
+                                                            <aspectControls:AdornerOverlay IsOverlayContentVisible="True">
+                                                                <Button
+                                                                    Name="ImageView"
+                                                                    Margin="{StaticResource SmallMarginAround}"
+                                                                    Padding="0"
+                                                                    BorderBrush="Gray"
+                                                                    BorderThickness="0.5"
+                                                                    Focusable="False">
+                                                                    <Button.Style>
+                                                                        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding WillBeRemoved}" Value="True">
+                                                                                    <Setter Property="Opacity" Value="0.5" />
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Button.Style>
+
+                                                                    <Grid>
+                                                                        <common:WorkingIndicator
+                                                                            Background="Transparent"
+                                                                            FadeInTime="0"
+                                                                            FadeOutTime="0"
+                                                                            IsWorking="{Binding IsLoadingPreview}"
+                                                                            Text="{x:Null}" />
+                                                                        <Border
+                                                                            Width="226"
+                                                                            Height="127"
+                                                                            CornerRadius="2">
+                                                                            <Border.Background>
+                                                                                <ImageBrush ImageSource="{Binding PreviewImage}" />
+                                                                            </Border.Background>
+                                                                        </Border>
+                                                                    </Grid>
+                                                                </Button>
+
+                                                                <aspectControls:AdornerOverlay.OverlayContent>
+                                                                    <Border
+                                                                        Width="228"
+                                                                        Height="140"
+                                                                        DataContext="{Binding DataContext, Source={x:Reference ImageView}}">
+
+                                                                        <Border
+                                                                            HorizontalAlignment="Right"
+                                                                            VerticalAlignment="Bottom"
+                                                                            Background="Transparent">
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <StackPanel.Visibility>
+                                                                                    <MultiBinding Converter="{x:Static converters:CommonConverters.VisibilityOrOrHidden}">
+                                                                                        <Binding
+                                                                                            Converter="{x:Static converters:CommonConverters.BooleanFalseToVisibilityHidden}"
+                                                                                            Path="IsMouseOver"
+                                                                                            RelativeSource="{RelativeSource Mode=FindAncestor,
+                                                                                                                            AncestorType={x:Type Border}}" />
+                                                                                        <Binding
+                                                                                            Converter="{x:Static converters:CommonConverters.BooleanFalseToVisibilityHidden}"
+                                                                                            Path="IsMouseOver"
+                                                                                            Source="{x:Reference ImageView}" />
+                                                                                    </MultiBinding>
+                                                                                </StackPanel.Visibility>
+                                                                                <Button
+                                                                                    Width="24"
+                                                                                    Height="24"
+                                                                                    Background="LightSalmon"
+                                                                                    Click="{utils:EventBinding DeleteImage,
+                                                                                                               Source={x:Reference ImageContainer}}"
+                                                                                    Content="{iconPacks:FontAwesome Kind=BanSolid,
+                                                                                                                    Width=12,
+                                                                                                                    Height=12}"
+                                                                                    Style="{StaticResource SetOperationRoundButton}"
+                                                                                    Tag="{Binding}" />
+                                                                                <Button
+                                                                                    Width="24"
+                                                                                    Height="24"
+                                                                                    Background="LightCyan"
+                                                                                    Click="{utils:EventBinding MoveImageLeft,
+                                                                                                               Source={x:Reference ImageContainer}}"
+                                                                                    Content="{iconPacks:FontAwesome Kind=ArrowLeftSolid,
+                                                                                                                    Width=12,
+                                                                                                                    Height=12}"
+                                                                                    Style="{StaticResource SetOperationRoundButton}"
+                                                                                    Tag="{Binding}"
+                                                                                    Visibility="{Binding CanMoveLeft, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityHidden}}" />
+                                                                                <Button
+                                                                                    Width="24"
+                                                                                    Height="24"
+                                                                                    Background="LightCyan"
+                                                                                    Click="{utils:EventBinding MoveImageRight,
+                                                                                                               Source={x:Reference ImageContainer}}"
+                                                                                    Content="{iconPacks:FontAwesome Kind=ArrowRightSolid,
+                                                                                                                    Width=12,
+                                                                                                                    Height=12}"
+                                                                                    Style="{StaticResource SetOperationRoundButton}"
+                                                                                    Tag="{Binding}"
+                                                                                    Visibility="{Binding CanMoveRight, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityHidden}}" />
+                                                                            </StackPanel>
+                                                                        </Border>
+                                                                    </Border>
+                                                                </aspectControls:AdornerOverlay.OverlayContent>
+                                                            </aspectControls:AdornerOverlay>
+                                                        </DataTemplate>
+                                                    </ItemsControl.Resources>
+
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <WrapPanel Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+
+                                                    <ItemsControl.ItemsSource>
+                                                        <CompositeCollection>
+                                                            <CollectionContainer Collection="{Binding Source={StaticResource ImagesResource}}" />
+                                                            <Button
+                                                                Width="228"
+                                                                Height="128"
+                                                                Margin="{StaticResource SmallMarginAround}"
+                                                                BorderBrush="Gray"
+                                                                BorderThickness="0.5"
+                                                                Click="{utils:EventBinding AddImage}"
+                                                                Focusable="False"
+                                                                Visibility="{Binding CanAddImages, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}">
+
+                                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                    <iconPacks:PackIconFontAwesome
+                                                                        Width="48"
+                                                                        Height="48"
+                                                                        HorizontalAlignment="Center"
+                                                                        Foreground="Gray"
+                                                                        Kind="PlusCircleSolid" />
+                                                                    <TextBlock
+                                                                        Margin="{StaticResource MarginTop}"
+                                                                        HorizontalAlignment="Center"
+                                                                        Style="{StaticResource HintTextStyle}">
+                                                                        Add Image
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </CompositeCollection>
+                                                    </ItemsControl.ItemsSource>
+                                                </ItemsControl>
+                                            </DockPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <Button
+                                Name="CreateButton"
+                                Margin="{StaticResource MarginAround}"
+                                HorizontalAlignment="Center"
+                                controls:ButtonHelper.PreserveTextCase="True"
+                                Click="{utils:EventBinding CreateBackgroundSet}"
+                                Content="Create Background Set"
+                                DockPanel.Dock="Top"
+                                Style="{StaticResource SquareButtonStyle}"
+                                ToolTip="Create a new background set." />
+                        </DockPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </DockPanel>
+    </DataTemplate>
+</ResourceDictionary>

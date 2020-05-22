@@ -12,6 +12,7 @@
         <DataTemplate.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="GeneralSettingsSections\HomeSection.xaml" />
                     <ResourceDictionary Source="GeneralSettingsSections\SettingsSection.xaml" />
                     <ResourceDictionary Source="GeneralSettingsSections\FeaturesSection.xaml" />
                     <ResourceDictionary Source="GeneralSettingsSections\ToolsSection.xaml" />
@@ -27,14 +28,14 @@
                     BorderThickness="0,2,0,0"
                     DockPanel.Dock="Bottom">
                     <StackPanel
-                        Margin="0,4,0,0"
+                        Margin="{StaticResource SmallMarginTop}"
                         HorizontalAlignment="Right"
-                        IsEnabled="{Binding SettingsTracker.IsDirty}"
+                        IsEnabled="{Binding IsDirty}"
                         Orientation="Horizontal">
                         <Button
                             Name="SaveButton"
                             Width="64"
-                            Margin="4"
+                            Margin="{StaticResource SmallMarginAround}"
                             controls:ButtonHelper.PreserveTextCase="True"
                             Click="{utils:EventBinding OnSaved}"
                             Content="Save"
@@ -43,7 +44,7 @@
                         <Button
                             Name="ResetButton"
                             Width="64"
-                            Margin="4"
+                            Margin="{StaticResource SmallMarginAround}"
                             controls:ButtonHelper.PreserveTextCase="True"
                             Click="{utils:EventBinding OnReset}"
                             Content="Reset"
@@ -52,120 +53,14 @@
                     </StackPanel>
                 </Border>
 
-                <TabControl DockPanel.Dock="Top">
-                    <TabItem Header="Home">
-                        <DockPanel>
-                            <TextBlock DockPanel.Dock="Top">Welcome to Shelton HTPC's configuration application!</TextBlock>
-                            <TextBlock DockPanel.Dock="Top">This application is used to manage all aspects of Shelton HTPC.</TextBlock>
-                            <TextBlock
-                                Margin="0,4,0,0"
-                                DockPanel.Dock="Top"
-                                FontWeight="Bold">
-                                Enjoy!
-                            </TextBlock>
-                            <Image
-                                Margin="96"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Source="{StaticResource ApplicationIconDrawing}" />
-                        </DockPanel>
-                    </TabItem>
-
-                    <TabItem>
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Label
-                                    Padding="0"
-                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=FontSize}"
-                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=Foreground}">
-                                    Settings
-                                </Label>
-                                <iconPacks:PackIconFontAwesome
-                                    Width="14"
-                                    Height="14"
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Kind="AsteriskSolid"
-                                    Visibility="{Binding SettingsTabTracker.IsDirty, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                            <ContentPresenter Content="{Binding BeingEditedSettingsModel}" ContentTemplate="{StaticResource SettingsSection}" />
-                        </ScrollViewer>
-                    </TabItem>
-
-                    <TabItem>
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Label
-                                    Padding="0"
-                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=FontSize}"
-                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=Foreground}">
-                                    Features
-                                </Label>
-                                <iconPacks:PackIconFontAwesome
-                                    Width="14"
-                                    Height="14"
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Kind="AsteriskSolid"
-                                    Visibility="{Binding FeaturesTabTracker.IsDirty, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                            <ContentPresenter Content="{Binding BeingEditedSettingsModel}" ContentTemplate="{StaticResource FeaturesSection}" />
-                        </ScrollViewer>
-                    </TabItem>
-
-                    <TabItem>
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Label
-                                    Padding="0"
-                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=FontSize}"
-                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=Foreground}">
-                                    Tools
-                                </Label>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                            <ContentPresenter Content="{Binding BeingEditedSettingsModel}" ContentTemplate="{StaticResource ToolsSection}" />
-                        </ScrollViewer>
-                    </TabItem>
-
-                    <TabItem>
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Label
-                                    Padding="0"
-                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=FontSize}"
-                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=Foreground}">
-                                    Input
-                                </Label>
-                                <iconPacks:PackIconFontAwesome
-                                    Width="14"
-                                    Height="14"
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Kind="AsteriskSolid"
-                                    Visibility="Collapsed" />
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                            <ContentPresenter Content="{Binding BeingEditedSettingsModel}" ContentTemplate="{StaticResource InputSection}" />
-                        </ScrollViewer>
-                    </TabItem>
-                </TabControl>
+                <TabControl
+                    DockPanel.Dock="Top"
+                    ItemsSource="{Binding Sections}"
+                    SelectionChanged="{utils:EventBinding OnSelectedTabChanged}"
+                    Style="{StaticResource NavigationTabControl}" />
             </DockPanel>
 
-            <common:WorkingIndicator
-                Name="savingIndicator"
-                IsWorking="{Binding IsSavingData}"
-                Text="Saving Data..." />
+            <common:WorkingIndicator Name="savingIndicator" Style="{StaticResource NavigationContentSavingOrResettingWorkingIndicator}" />
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

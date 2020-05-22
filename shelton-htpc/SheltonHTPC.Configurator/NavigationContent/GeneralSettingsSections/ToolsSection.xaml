@@ -1,152 +1,164 @@
 ﻿<ResourceDictionary
-    x:Class="SheltonHTPC.NavigationContent.GeneralSettingsSections.ToolsSection"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:content="clr-namespace:SheltonHTPC.NavigationContent"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:entities="clr-namespace:SheltonHTPC.Data.Entities;assembly=SheltonHTPC.Data"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:ClassModifier="public">
+    xmlns:sections="clr-namespace:SheltonHTPC.NavigationContent.GeneralSettingsSections"
+    xmlns:utils="clr-namespace:WPFAspects.Utils;assembly=WPFAspects">
 
-    <DataTemplate x:Key="ToolsSection" DataType="{x:Type entities:GeneralSettings}">
-        <UniformGrid VerticalAlignment="Top" Columns="2">
-            <GroupBox Margin="8" Header="Migrate Data (Not Implemented)">
-                <DockPanel>
-                    <Border
-                        Margin="4,16,4,0"
-                        Padding="0,8,0,4"
-                        BorderBrush="{StaticResource AccentColorBrush2}"
-                        BorderThickness="0,1,0,0"
-                        DockPanel.Dock="Bottom">
-                        <DockPanel>
-                            <TextBlock VerticalAlignment="Center">Current data Path:</TextBlock>
+    <DataTemplate DataType="{x:Type sections:ToolsSectionModel}">
+        <StackPanel>
+            <Border Style="{StaticResource InfoBox}" Visibility="{Binding Parent.OngoingTaskManager.OngoingTasks, Converter={x:Static converters:CommonConverters.NullEmptyEnumerableToVisibilityCollapsed}}">
+                <TextBlock Margin="{StaticResource SmallMarginAround}" Text="These tools cannot be used while ongoing tasks are in progress." />
+            </Border>
 
+            <UniformGrid VerticalAlignment="Top" Columns="2">
+                <UniformGrid.Style>
+                    <Style TargetType="{x:Type UniformGrid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Parent.OngoingTaskManager.OngoingTasks, Converter={x:Static converters:CommonConverters.NonEmptyEnumerableToVisibilityHidden}}" Value="Hidden">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="Opacity" Value="0.7" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </UniformGrid.Style>
+
+                <GroupBox Margin="{StaticResource MarginAround}" Header="Migrate Data (Not Implemented)">
+                    <DockPanel>
+                        <Border
+                            Margin="{StaticResource SmallMarginAround}"
+                            BorderBrush="{StaticResource AccentColorBrush2}"
+                            BorderThickness="0,1,0,0"
+                            DockPanel.Dock="Bottom">
+                            <DockPanel Margin="{StaticResource MarginTop}">
+                                <TextBlock VerticalAlignment="Center">Current data Path:</TextBlock>
+
+                                <Button
+                                    Width="96"
+                                    VerticalAlignment="Center"
+                                    controls:ButtonHelper.PreserveTextCase="True"
+                                    DockPanel.Dock="Right"
+                                    IsEnabled="False"
+                                    Style="{StaticResource SquareButtonStyle}">
+                                    Migrate
+                                </Button>
+
+                                <TextBlock
+                                    Margin="{StaticResource SmallMarginLeftRight}"
+                                    VerticalAlignment="Center"
+                                    Opacity="0.5"
+                                    Text="{Binding Parent.BeingEditedSettingsModel.DataPath}"
+                                    TextTrimming="CharacterEllipsis"
+                                    ToolTip="{Binding Parent.BeingEditedSettingsModel.DataPath}" />
+                            </DockPanel>
+                        </Border>
+
+                        <TextBlock
+                            Margin="{StaticResource SmallMarginLeftRight}"
+                            DockPanel.Dock="Top"
+                            TextWrapping="Wrap">
+                            You can change the location where Shelton HTPC stores its configuration and meta data.<LineBreak /><LineBreak />
+                            Note however that migrating all data may take some time, and Shelton HTPC should not be ran while it is in progress.</TextBlock>
+                    </DockPanel>
+                </GroupBox>
+
+                <GroupBox Margin="{StaticResource MarginAround}" Header="Purge Data (Reset to Default)">
+                    <DockPanel>
+                        <Border
+                            Margin="{StaticResource SmallMarginAround}"
+                            BorderBrush="{StaticResource AccentColorBrush2}"
+                            BorderThickness="0,1,0,0"
+                            DockPanel.Dock="Bottom">
                             <Button
                                 Width="96"
+                                Margin="{StaticResource MarginTop}"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                controls:ButtonHelper.PreserveTextCase="True"
+                                Click="{utils:EventBinding DoPurge}"
+                                DockPanel.Dock="Right"
+                                Style="{StaticResource SquareButtonStyle}">
+                                Purge
+                            </Button>
+                        </Border>
+
+                        <TextBlock
+                            Margin="{StaticResource SmallMarginLeftRight}"
+                            DockPanel.Dock="Top"
+                            TextWrapping="Wrap">
+                            This tool will purge all Shelton HTPC data and reset it back to the state it was in before it was ran for the first time.<LineBreak /><LineBreak />
+                            This tool&#160;<Bold>deletes all Shelton HTPC data.</Bold>
+                            Your source files will not be modified, but once deleted your configuration information and metadata is&#160;<Bold>gone for good!</Bold></TextBlock>
+                    </DockPanel>
+                </GroupBox>
+
+                <GroupBox Margin="{StaticResource MarginAround}" Header="Backup (Not Implemented)">
+                    <DockPanel>
+                        <Border
+                            Margin="{StaticResource SmallMarginAround}"
+                            BorderBrush="{StaticResource AccentColorBrush2}"
+                            BorderThickness="0,1,0,0"
+                            DockPanel.Dock="Bottom">
+                            <Button
+                                Width="96"
+                                Margin="{StaticResource MarginTop}"
+                                HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 controls:ButtonHelper.PreserveTextCase="True"
                                 DockPanel.Dock="Right"
                                 IsEnabled="False"
                                 Style="{StaticResource SquareButtonStyle}">
-                                Migrate
+                                Backup
                             </Button>
+                        </Border>
 
-                            <TextBlock
-                                Margin="4,0,4,0"
+                        <Border Margin="{StaticResource MarginTop}" DockPanel.Dock="Bottom">
+                            <CheckBox
+                                Name="IncludeImagesCheckBox"
+                                Margin="{StaticResource SmallMarginAround}"
+                                Content="Include thumbnail and low-res placeholders in backup."
+                                ToolTip="If unchecked, these images will be regenerated on restore.  If checked backups may be much larger." />
+                        </Border>
+
+                        <TextBlock
+                            Margin="{StaticResource SmallMarginLeftRight}"
+                            DockPanel.Dock="Top"
+                            TextWrapping="Wrap">
+                            This tool will backup all Shelton HTPC configuration data into a .bak.htpc file.<LineBreak /><LineBreak />
+                            This will backup all metadata/cached data in addition to all configuration information.</TextBlock>
+                    </DockPanel>
+                </GroupBox>
+
+                <GroupBox Margin="{StaticResource MarginAround}" Header="Restore (Not Implemented)">
+                    <DockPanel>
+                        <Border
+                            Margin="{StaticResource SmallMarginAround}"
+                            BorderBrush="{StaticResource AccentColorBrush2}"
+                            BorderThickness="0,1,0,0"
+                            DockPanel.Dock="Bottom">
+                            <Button
+                                Width="96"
+                                Margin="{StaticResource MarginTop}"
+                                HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Opacity="0.5"
-                                Text="{Binding DataPath}"
-                                TextTrimming="CharacterEllipsis"
-                                ToolTip="{Binding DataPath}" />
-                        </DockPanel>
-                    </Border>
+                                controls:ButtonHelper.PreserveTextCase="True"
+                                DockPanel.Dock="Right"
+                                IsEnabled="False"
+                                Style="{StaticResource SquareButtonStyle}">
+                                Restore
+                            </Button>
+                        </Border>
 
-                    <TextBlock
-                        Margin="4,0,4,0"
-                        DockPanel.Dock="Top"
-                        TextWrapping="Wrap">
-                        You can change the location where Shelton HTPC stores its configuration and meta data.<LineBreak /><LineBreak />
-                        Note however that migrating all data may take some time, and Shelton HTPC should not be ran while it is in progress.</TextBlock>
-                </DockPanel>
-            </GroupBox>
-
-            <GroupBox Margin="8" Header="Purge Data (Reset to Default)">
-                <DockPanel>
-                    <Border
-                        Margin="4,16,4,0"
-                        Padding="0,8,0,4"
-                        BorderBrush="{StaticResource AccentColorBrush2}"
-                        BorderThickness="0,1,0,0"
-                        DockPanel.Dock="Bottom">
-                        <Button
-                            Width="96"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            controls:ButtonHelper.PreserveTextCase="True"
-                            Click="PurgeButton_Click"
-                            DockPanel.Dock="Right"
-                            Style="{StaticResource SquareButtonStyle}">
-                            Purge
-                        </Button>
-                    </Border>
-
-                    <TextBlock
-                        Margin="4,0,4,0"
-                        DockPanel.Dock="Top"
-                        TextWrapping="Wrap">
-                        This tool will purge all Shelton HTPC data and reset it back to the state it was in before it was ran for the first time.<LineBreak /><LineBreak />
-                        This tool&#160;<Bold>deletes all Shelton HTPC data.</Bold>
-                        Your source files will not be modified, but once deleted your configuration information and metadata is&#160;<Bold>gone for good!</Bold></TextBlock>
-                </DockPanel>
-            </GroupBox>
-
-            <GroupBox Margin="8" Header="Backup (Not Implemented)">
-                <DockPanel>
-                    <Border
-                        Margin="4,16,4,0"
-                        Padding="0,8,0,4"
-                        BorderBrush="{StaticResource AccentColorBrush2}"
-                        BorderThickness="0,1,0,0"
-                        DockPanel.Dock="Bottom">
-                        <Button
-                            Width="96"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            controls:ButtonHelper.PreserveTextCase="True"
-                            DockPanel.Dock="Right"
-                            IsEnabled="False"
-                            Style="{StaticResource SquareButtonStyle}">
-                            Backup
-                        </Button>
-                    </Border>
-
-                    <CheckBox
-                        Name="IncludeImagesCheckBox"
-                        Margin="4,12,4,0"
-                        Content="Include thumbnail and low-res placeholder images in backup."
-                        DockPanel.Dock="Bottom"
-                        ToolTip="If unchecked, these images will be regenerated on restore.  If checked backups may be much larger." />
-
-                    <TextBlock
-                        Margin="4,0,4,0"
-                        DockPanel.Dock="Top"
-                        TextWrapping="Wrap">
-                        This tool will backup all Shelton HTPC configuration data into a .bak.htpc file.<LineBreak /><LineBreak />
-                        This will backup all metadata/cached data in addition to all configuration information.</TextBlock>
-                </DockPanel>
-            </GroupBox>
-
-            <GroupBox Margin="8" Header="Restore (Not Implemented)">
-                <DockPanel>
-                    <Border
-                        Margin="4,16,4,0"
-                        Padding="0,8,0,4"
-                        BorderBrush="{StaticResource AccentColorBrush2}"
-                        BorderThickness="0,1,0,0"
-                        DockPanel.Dock="Bottom">
-                        <Button
-                            Width="96"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            controls:ButtonHelper.PreserveTextCase="True"
-                            DockPanel.Dock="Right"
-                            IsEnabled="False"
-                            Style="{StaticResource SquareButtonStyle}">
-                            Restore
-                        </Button>
-                    </Border>
-
-                    <TextBlock
-                        Margin="4,0,4,0"
-                        DockPanel.Dock="Top"
-                        TextWrapping="Wrap">
-                        This tool will restore a previously made Shelton HTPC backup (a .bak.htpc file).<LineBreak /><LineBreak />
-                        This will replace in current all existing data (except for the current data path).</TextBlock>
-                </DockPanel>
-            </GroupBox>
-        </UniformGrid>
+                        <TextBlock
+                            Margin="{StaticResource SmallMarginLeftRight}"
+                            DockPanel.Dock="Top"
+                            TextWrapping="Wrap">
+                            This tool will restore a previously made Shelton HTPC backup (a .bak.htpc file).<LineBreak /><LineBreak />
+                            This will replace in current all existing data (except for the current data path).</TextBlock>
+                    </DockPanel>
+                </GroupBox>
+            </UniformGrid>
+        </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

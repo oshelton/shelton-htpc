@@ -12,6 +12,12 @@ namespace SheltonHTPC.Common.Utils
     /// </summary>
     public static class ImageFactoryExtensions
     {
+        public static readonly int UhdWidth = 3840;
+        public static readonly int UhdHeight = 2160;
+
+        public static readonly int HdWidth = 1920;
+        public static readonly int HdHeight = 1080;
+
         private static readonly double WidthTVAspectRatioFactor = 16.0 / 9.0;
         private static readonly double HeightTVAspectRatioFactor = 9.0 / 16.0;
 
@@ -34,19 +40,37 @@ namespace SheltonHTPC.Common.Utils
         }
 
         /// <summary>
-        /// Resize an image to the standard 4k (3840x2160) resolution.
+        /// Resize an image to the standard Uhd/4k (3840x2160) resolution.
         /// </summary>
-        public static ImageFactory ResizeImageTo4K(this ImageFactory processor)
+        public static ImageFactory ResizeImageToUhd(this ImageFactory processor)
         {
             return processor.Resize(new System.Drawing.Size(3840, 2160));
         }
 
         /// <summary>
-        /// Resize an image to the standard 1080p (1920x1080) resolution.
+        /// Resize an image to the standard Hd/1080p (1920x1080) resolution.
         /// </summary>
-        public static ImageFactory ResizeImageTo1080P(this ImageFactory processor)
+        public static ImageFactory ResizeImageToHd(this ImageFactory processor)
         {
             return processor.Resize(new System.Drawing.Size(1920, 1080));
+        }
+
+        /// <summary>
+        /// Resizes an image to a particular height preserving the aspect ratio.
+        /// </summary>
+        public static ImageFactory ResizeImageToHeight(this ImageFactory processor, int height)
+        {
+            double factor = processor.Image.Height / processor.Image.Width;
+            return processor.Resize(new System.Drawing.Size((int) (height / factor), height));
+        }
+
+        /// <summary>
+        /// Resizes an image to a particular height preserving the aspect ratio.
+        /// </summary>
+        public static ImageFactory ResizeImageToWidth(this ImageFactory processor, int width)
+        {
+            double factor = processor.Image.Width / processor.Image.Height;
+            return processor.Resize(new System.Drawing.Size(width, (int) (width / factor)));
         }
 
         /// <summary>

@@ -1,0 +1,43 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SheltonHTPC"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:Double x:Key="MarginValue">8</sys:Double>
+    <Thickness x:Key="MarginAround">8,8,8,8</Thickness>
+    <Thickness x:Key="MarginLeftRight">8,0,8,0</Thickness>
+    <Thickness x:Key="MarginTopBottom">0,8,0,8</Thickness>
+    <Thickness x:Key="MarginLeft">8,0,0,0</Thickness>
+    <Thickness x:Key="MarginTop">0,8,0,0</Thickness>
+    <Thickness x:Key="MarginRight">0,0,8,0</Thickness>
+    <Thickness x:Key="MarginBottom">0,0,0,8</Thickness>
+
+    <sys:Double x:Key="SmallMarginValue">4</sys:Double>
+    <Thickness x:Key="SmallMarginAround">4,4,4,4</Thickness>
+    <Thickness x:Key="SmallMarginLeftRight">4,0,4,0</Thickness>
+    <Thickness x:Key="SmallMarginTopBottom">0,4,0,4</Thickness>
+    <Thickness x:Key="SmallMarginLeft">4,0,0,0</Thickness>
+    <Thickness x:Key="SmallMarginTop">0,4,0,0</Thickness>
+    <Thickness x:Key="SmallMarginRight">0,0,4,0</Thickness>
+    <Thickness x:Key="SmallMarginBottom">0,0,0,4</Thickness>
+
+    <sys:Double x:Key="LargeMarginValue">12</sys:Double>
+    <Thickness x:Key="LargeMarginAround">12,12,12,12</Thickness>
+    <Thickness x:Key="LargeMarginLeftRight">12,0,12,0</Thickness>
+    <Thickness x:Key="LargeMarginTopBottom">0,12,0,12</Thickness>
+    <Thickness x:Key="LargeMarginLeft">12,0,0,0</Thickness>
+    <Thickness x:Key="LargeMarginTop">0,12,0,0</Thickness>
+    <Thickness x:Key="LargeMarginRight">0,0,12,0</Thickness>
+    <Thickness x:Key="LargeMarginBottom">0,0,0,12</Thickness>
+
+    <sys:Double x:Key="ExtraLargeMarginValue">16</sys:Double>
+    <Thickness x:Key="ExtraLargeMarginAround">16,16,16,16</Thickness>
+    <Thickness x:Key="ExtraLargeMarginLeftRight">16,0,16,0</Thickness>
+    <Thickness x:Key="ExtraLargeMarginTopBottom">0,16,0,16</Thickness>
+    <Thickness x:Key="ExtraLargeMarginLeft">16,0,0,0</Thickness>
+    <Thickness x:Key="ExtraLargeMarginTop">0,16,0,0</Thickness>
+    <Thickness x:Key="ExtraLargeMarginRight">0,0,16,0</Thickness>
+    <Thickness x:Key="ExtraLargeMarginBottom">0,0,0,16</Thickness>
+</ResourceDictionary>

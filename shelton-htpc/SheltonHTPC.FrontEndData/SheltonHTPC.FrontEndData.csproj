@@ -42,10 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entites\GeneralSettings.cs" />
+    <Compile Include="Entites\LayoutSettings.cs" />
     <Compile Include="MissingRequiredDataException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SheltonHTPC.Dtos\SheltonHTPC.Dtos.csproj">
+      <Project>{bba1cb76-e1fb-4d38-a012-61d5a9675a33}</Project>
+      <Name>SheltonHTPC.Dtos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SheltonHTPC.Interfaces\SheltonHTPC.Interfaces.csproj">
       <Project>{3a5c95c0-5e61-4a7d-8d9d-947a9bec8ee7}</Project>
       <Name>SheltonHTPC.Interfaces</Name>

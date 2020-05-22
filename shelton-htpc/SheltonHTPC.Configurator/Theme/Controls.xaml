@@ -1,14 +1,103 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:common="clr-namespace:SheltonHTPC.Common;assembly=SheltonHTPC.Common"
+    xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:SheltonHTPC">
+
+    <Style x:Key="DirtyTabIcon" TargetType="{x:Type iconPacks:PackIconFontAwesome}">
+        <Setter Property="Width" Value="14" />
+        <Setter Property="Height" Value="14" />
+        <Setter Property="Margin" Value="{StaticResource MarginLeft}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Kind" Value="AsteriskSolid" />
+        <Setter Property="ToolTip" Value="This tab has unsaved changes." />
+    </Style>
+
+    <Style x:Key="NavigationTabControl" TargetType="{x:Type TabControl}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TabHeaderTextStyle}" Text="{Binding Title}" />
+                        <iconPacks:PackIconFontAwesome Style="{StaticResource DirtyTabIcon}" Visibility="{Binding IsDirty, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ContentPresenter Name="TabContent" Content="{Binding}" />
+
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Scrollable}" Value="True">
+                            <Setter TargetName="TabContent" Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <ScrollViewer
+                                                Padding="{StaticResource MarginAround}"
+                                                Background="White"
+                                                HorizontalScrollBarVisibility="Disabled"
+                                                VerticalScrollBarVisibility="Auto"
+                                                Visibility="{Binding IsWorking, Converter={x:Static converters:CommonConverters.BooleanTrueToVisibilityCollapsed}}">
+                                                <ContentPresenter Content="{Binding}" />
+                                            </ScrollViewer>
+                                            <common:WorkingIndicator IsWorking="{Binding IsWorking}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Scrollable}" Value="False">
+                            <Setter TargetName="TabContent" Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Grid DataContext="{TemplateBinding Content}">
+                                            <Border
+                                                Padding="{StaticResource MarginAround}"
+                                                Background="White"
+                                                BorderThickness="0"
+                                                Visibility="{Binding IsWorking, Converter={x:Static converters:CommonConverters.BooleanTrueToVisibilityCollapsed}}">
+                                                <ContentPresenter Content="{Binding}" />
+                                            </Border>
+                                            <common:WorkingIndicator IsWorking="{Binding IsWorking}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="InfoBox" TargetType="{x:Type Border}">
         <Setter Property="Margin" Value="12,8,12,8" />
         <Setter Property="BorderThickness" Value="4,0,0,0" />
         <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
         <Setter Property="Background" Value="LightGray" />
+    </Style>
+
+    <Style
+        x:Key="NavigationContentSavingOrResettingWorkingIndicator"
+        BasedOn="{StaticResource {x:Type common:WorkingIndicator}}"
+        TargetType="{x:Type common:WorkingIndicator}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsSavingData}" Value="True">
+                <Setter Property="IsWorking" Value="True" />
+                <Setter Property="Text" Value="Saving Data..." />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsResettingData}" Value="True">
+                <Setter Property="IsWorking" Value="True" />
+                <Setter Property="Text" Value="Resetting Data..." />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

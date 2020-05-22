@@ -18,6 +18,8 @@ namespace SheltonHTPC.Dtos.Layout
         {
             _TypeMapper = new BsonMapper();
             LayoutSettingsDto.RegisterDtoMap(_TypeMapper);
+            BackgroundSetDto.RegisterDtoMap(_TypeMapper);
+            BackgroundSetImageDto.RegisterDtoMap(_TypeMapper);
         }
 
         /// <summary>
@@ -49,7 +51,7 @@ namespace SheltonHTPC.Dtos.Layout
                     var evictionPolicy = new CacheItemPolicy()
                     {
                         RemovedCallback = RemovedCallback,
-                        SlidingExpiration = TimeSpan.FromMinutes(2)
+                        SlidingExpiration = TimeSpan.FromSeconds(10)
                     };
                     MemoryCache.Default.Set(_CachedRepoName, repo, evictionPolicy);
                     return repo;

@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LiteDB">
-      <Version>4.1.4</Version>
+      <Version>5.0.8</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

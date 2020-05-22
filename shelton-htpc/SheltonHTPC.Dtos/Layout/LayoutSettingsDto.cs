@@ -24,6 +24,10 @@ namespace SheltonHTPC.Dtos.Layout
                 .Field(x => x.BackgroundRotationScheme, nameof(BackgroundRotationScheme));
         }
 
+        /// <summary>
+        /// Id of the settings object.
+        /// </summary>
+        /// <remarks>Unused.</remarks>
         public Guid Id { get; set; }
 
         /// <summary>

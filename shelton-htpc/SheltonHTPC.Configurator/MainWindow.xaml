@@ -155,7 +155,7 @@
                     Visibility="{Binding GeneralSettings.EnableWebAccess, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
             </StackPanel>
 
-            <ContentControl Margin="12" Content="{Binding CurrentContentModel}">
+            <ContentControl Margin="{StaticResource LargeMarginAround}" Content="{Binding CurrentContentModel}">
                 <ContentControl.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.MergedDictionaries>
@@ -178,7 +178,7 @@
             DataContext="{Binding OngoingTaskManager}"
             ExpandDirection="Up">
             <Expander.Header>
-                <TextBlock Margin="4" Text="{Binding Title}" />
+                <TextBlock Margin="{StaticResource SmallMarginAround}" Text="{Binding Title}" />
             </Expander.Header>
             <Popup IsOpen="{Binding IsExpanded, ElementName=OngoingTaskExpander}" Placement="Top">
                 <Border
@@ -187,7 +187,7 @@
                     Background="WhiteSmoke"
                     BorderBrush="Black"
                     BorderThickness="0.5,0.5,0.5,0">
-                    <ItemsControl Margin="12" ItemsSource="{Binding OngoingTasks}">
+                    <ItemsControl Margin="{StaticResource LargeMarginAround}" ItemsSource="{Binding OngoingTasks}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type configUtils:OngoingTaskModel}">
                                 <DockPanel>
@@ -197,7 +197,7 @@
                                         Text="{Binding Title}"
                                         TextTrimming="CharacterEllipsis" />
                                     <ProgressBar
-                                        Margin="4"
+                                        Margin="{StaticResource SmallMarginAround}"
                                         DockPanel.Dock="Right"
                                         IsIndeterminate="True" />
                                 </DockPanel>

@@ -73,6 +73,6 @@ namespace SheltonHTPC.Utils
                 Title = $"Ongoing Tasks - {_BackingOngoingTasks.Count}";
         }
 
-        private static readonly string NoTasksTitle = "No Ongoing Tasks";
+        private const string NoTasksTitle = "No Ongoing Tasks";
     }
 }

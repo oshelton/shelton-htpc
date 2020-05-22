@@ -1,15 +1,38 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:SheltonHTPC">
+    xmlns:local="clr-namespace:SheltonHTPC"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <Style x:Key="SettingHeaderText" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontWeight" Value="Bold" />
+    <sys:Double x:Key="SmallFontSize">10</sys:Double>
+    <sys:Double x:Key="NormalFontSize">12</sys:Double>
+    <sys:Double x:Key="MediumFontSize">14</sys:Double>
+    <sys:Double x:Key="LargeFontSize">16</sys:Double>
+    <sys:Double x:Key="ExtraLargeFontSize">24</sys:Double>
+
+    <Style x:Key="DefaultTextStyle">
+        <Setter Property="TextElement.FontSize" Value="{StaticResource NormalFontSize}" />
+        <Setter Property="TextElement.FontFamily" Value="{StaticResource DefaultFont}" />
     </Style>
 
-    <Style TargetType="{x:Type Paragraph}">
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+    <Style BasedOn="{StaticResource DefaultTextStyle}" TargetType="{x:Type TextBlock}" />
+    <Style BasedOn="{StaticResource DefaultTextStyle}" TargetType="{x:Type Paragraph}" />
+
+    <Style x:Key="SettingHeaderText" BasedOn="{StaticResource DefaultTextStyle}">
+        <Setter Property="TextElement.FontWeight" Value="Bold" />
     </Style>
+
+    <Style x:Key="TabHeaderTextStyle" BasedOn="{StaticResource DefaultTextStyle}">
+        <Setter Property="TextBlock.Padding" Value="0" />
+        <Setter Property="TextElement.FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=FontSize}" />
+        <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=Foreground}" />
+    </Style>
+
+    <Style x:Key="HintTextStyle" BasedOn="{StaticResource DefaultTextStyle}">
+        <Setter Property="TextElement.FontStyle" Value="Italic" />
+        <Setter Property="TextElement.Foreground" Value="Gray" />
+    </Style>
+
 </ResourceDictionary>

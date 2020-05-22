@@ -13,6 +13,7 @@
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="LayoutSections\SettingsSection.xaml" />
+                    <ResourceDictionary Source="LayoutSections\BackgroundSetsSection.xaml" />
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </DataTemplate.Resources>
@@ -24,14 +25,14 @@
                     BorderThickness="0,2,0,0"
                     DockPanel.Dock="Bottom">
                     <StackPanel
-                        Margin="0,4,0,0"
+                        Margin="{StaticResource SmallMarginTop}"
                         HorizontalAlignment="Right"
-                        IsEnabled="{Binding SettingsTracker.IsDirty}"
+                        IsEnabled="{Binding IsDirty}"
                         Orientation="Horizontal">
                         <Button
                             Name="SaveButton"
                             Width="64"
-                            Margin="4"
+                            Margin="{StaticResource SmallMarginAround}"
                             controls:ButtonHelper.PreserveTextCase="True"
                             Click="{utils:EventBinding OnSaved}"
                             Content="Save"
@@ -40,7 +41,7 @@
                         <Button
                             Name="ResetButton"
                             Width="64"
-                            Margin="4"
+                            Margin="{StaticResource SmallMarginAround}"
                             controls:ButtonHelper.PreserveTextCase="True"
                             Click="{utils:EventBinding OnReset}"
                             Content="Reset"
@@ -49,37 +50,14 @@
                     </StackPanel>
                 </Border>
 
-                <TabControl DockPanel.Dock="Top">
-                    <TabItem>
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Label
-                                    Padding="0"
-                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=FontSize}"
-                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ContentControlEx}}, Path=Foreground}">
-                                    Settings
-                                </Label>
-                                <iconPacks:PackIconFontAwesome
-                                    Width="14"
-                                    Height="14"
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Kind="AsteriskSolid"
-                                    Visibility="{Binding SettingsTracker.IsDirty, Converter={x:Static converters:CommonConverters.BooleanFalseToVisibilityCollapsed}}" />
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                            <ContentPresenter Content="{Binding BeingEditedSettingsModel}" ContentTemplate="{StaticResource SettingsSection}" />
-                        </ScrollViewer>
-                    </TabItem>
-                </TabControl>
+                <TabControl
+                    DockPanel.Dock="Top"
+                    ItemsSource="{Binding Sections}"
+                    SelectionChanged="{utils:EventBinding OnSelectedTabChanged}"
+                    Style="{StaticResource NavigationTabControl}" />
             </DockPanel>
 
-            <common:WorkingIndicator
-                Name="savingIndicator"
-                IsWorking="{Binding IsSavingData}"
-                Text="Saving Data..." />
+            <common:WorkingIndicator Style="{StaticResource NavigationContentSavingOrResettingWorkingIndicator}" />
         </Grid>
     </DataTemplate>
 

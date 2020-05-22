@@ -1,18 +1,12 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:content="clr-namespace:SheltonHTPC.NavigationContent"
-    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:converters="clr-namespace:WPFAspects.Converters;assembly=WPFAspects"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:entities="clr-namespace:SheltonHTPC.Data.Entities;assembly=SheltonHTPC.Data"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    xmlns:sections="clr-namespace:SheltonHTPC.NavigationContent.GeneralSettingsSections">
 
-    <DataTemplate x:Key="FeaturesSection" DataType="{x:Type entities:GeneralSettings}">
+    <DataTemplate DataType="{x:Type sections:FeaturesSectionModel}">
         <StackPanel>
             <TextBlock>This tab allows you turn various Shelton HTPC features on and off.</TextBlock>
-            <Grid Margin="0,8,0,8">
+            <Grid Margin="{StaticResource MarginTopBottom}" DataContext="{Binding Parent.BeingEditedSettingsModel}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -29,57 +23,57 @@
                 <CheckBox
                     Grid.Row="0"
                     Grid.Column="0"
-                    Margin="4,4,8,4"
+                    Margin="{StaticResource SmallMarginAround}"
                     Content="Movies"
                     IsChecked="{Binding EnableMovies}" />
                 <CheckBox
                     Grid.Row="1"
                     Grid.Column="0"
-                    Margin="4,4,8,4"
+                    Margin="{StaticResource SmallMarginAround}"
                     Content="TV Series"
                     IsChecked="{Binding EnableSeries}" />
                 <CheckBox
                     Grid.Row="2"
                     Grid.Column="0"
-                    Margin="4,4,8,4"
+                    Margin="{StaticResource SmallMarginAround}"
                     Content="Music"
                     IsChecked="{Binding EnableMusic}" />
                 <CheckBox
                     Grid.Row="3"
                     Grid.Column="0"
-                    Margin="4,4,8,4"
+                    Margin="{StaticResource SmallMarginAround}"
                     Content="Photos"
                     IsChecked="{Binding EnablePhotos}" />
                 <CheckBox
                     Grid.Row="4"
                     Grid.Column="0"
-                    Margin="4,4,8,4"
+                    Margin="{StaticResource SmallMarginAround}"
                     Content="Games"
                     IsChecked="{Binding EnableGames}" />
 
                 <CheckBox
                     Grid.Row="0"
                     Grid.Column="1"
-                    Margin="4"
+                    Margin="{StaticResource SmallMarginAround}"
                     Content="Applications"
                     IsChecked="{Binding EnableApplications}" />
                 <CheckBox
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="4"
+                    Margin="{StaticResource SmallMarginAround}"
                     Content="Web Sites"
                     IsChecked="{Binding EnableWebSites}" />
                 <CheckBox
                     Grid.Row="2"
                     Grid.Column="1"
-                    Margin="4"
+                    Margin="{StaticResource SmallMarginAround}"
                     Content="Widgets"
                     IsChecked="{Binding EnableWidgets}" />
                 <CheckBox
                     Grid.Row="3"
                     Grid.Column="1"
-                    Margin="4"
-                    Content="Widgets"
+                    Margin="{StaticResource SmallMarginAround}"
+                    Content="Web Access"
                     IsChecked="{Binding EnableWebAccess}" />
             </Grid>
             <TextBlock TextWrapping="Wrap">

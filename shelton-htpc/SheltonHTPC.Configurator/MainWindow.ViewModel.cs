@@ -38,13 +38,13 @@ namespace SheltonHTPC
         public async Task Initialize()
         {
             IsInitializing = true;
-            var result = await GeneralSettings.Deserialize();
+            var result = await GeneralSettings.Deserialize().ConfigureAwait(true);
 
             var initTasks = new List<Task>();
             foreach (var contentModel in _NavigationContentModels.Values)
                 initTasks.Add(contentModel.Initialize(result));
 
-            await Task.WhenAll(initTasks.ToArray());
+            await Task.WhenAll(initTasks.ToArray()).ConfigureAwait(true);
 
             GeneralSettings = result;
             IsInitializing = false;
@@ -58,7 +58,7 @@ namespace SheltonHTPC
             NavigationContentModelBase newContent = null;
             if (_NavigationContentModels.TryGetValue(kind, out newContent))
             {
-                if (CurrentContentModel != null && !CurrentContentModel.CanNavigateAway())
+                if (CurrentContentModel != null && !CurrentContentModel.CanNavigateAway)
                 {
                     //TODO Issue #29: Confirm, clean up, etc...
                 }
@@ -99,11 +99,17 @@ namespace SheltonHTPC
             get => CheckIsOnMainThread(_CurrentContentModel);
             set
             {
-                if (_CurrentContentModel != null && value != _CurrentContentModel)
-                    _CurrentContentModel.OnNavigatedAwayFrom();
+                Task.Run(() =>
+                {
+                    Application.Current.Dispatcher.Invoke(async () =>
+                    {
+                        if (_CurrentContentModel != null && value != _CurrentContentModel)
+                            await _CurrentContentModel.OnNavigatedAwayFrom().ConfigureAwait(true);
 
-                if (SetPropertyBackingValue(value, ref _CurrentContentModel) && value != null)
-                    _CurrentContentModel.OnNavigatedTo();
+                        if (SetPropertyBackingValue(value, ref _CurrentContentModel) && value != null)
+                            await _CurrentContentModel.OnNavigatedTo().ConfigureAwait(true);
+                    });
+                });
             }
         }
 

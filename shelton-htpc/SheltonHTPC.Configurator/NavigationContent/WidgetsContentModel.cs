@@ -2,6 +2,7 @@
 using SheltonHTPC.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,36 +11,16 @@ using WPFAspects.Core;
 
 namespace SheltonHTPC.NavigationContent
 {
-    public class WidgetsContentModel : NavigationContentModelBase
+    public class WidgetsContentModel : NavigationContentModelBase<WidgetsContentModel>
     {
         public WidgetsContentModel(OngoingTaskManager taskManager)
-            : base(taskManager) { }
-
-        public override bool CanNavigateAway() => true;
-
-        public override Task Initialize(GeneralSettings generalSettings)
+            : base(taskManager)
         {
-            return Task.CompletedTask;
-        }
-
-        public override Task OnNavigatedTo()
-        {
-            return Task.CompletedTask;
-        }
-
-        public override Task OnNavigatedAwayFrom()
-        {
-            return Task.CompletedTask;
-        }
-
-        public override void OnSaved(object sender, RoutedEventArgs args)
-        {
-        }
-
-        public override void OnReset(object sender, RoutedEventArgs args)
-        {
+            Sections = new ReadOnlyCollection<NavigationSectionModelBase<WidgetsContentModel>>(Array.Empty<NavigationSectionModelBase<WidgetsContentModel>>());
         }
 
         public override ContentKind Kind => ContentKind.Widgets;
+
+        public override ReadOnlyCollection<NavigationSectionModelBase<WidgetsContentModel>> Sections { get; }
     }
 }

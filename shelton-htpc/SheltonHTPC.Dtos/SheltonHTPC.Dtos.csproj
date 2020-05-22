@@ -43,13 +43,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Layout\BackgroundRotationScheme.cs" />
+    <Compile Include="Layout\BackgroundSetDto.cs" />
+    <Compile Include="Layout\BackgroundSetImageDto.cs" />
+    <Compile Include="Layout\BackgroundSetStyle.cs" />
     <Compile Include="Layout\LayoutDataManager.cs" />
     <Compile Include="Layout\LayoutSettingsDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LiteDB">
-      <Version>4.1.4</Version>
+      <Version>5.0.8</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
