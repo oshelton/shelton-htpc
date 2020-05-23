@@ -296,15 +296,9 @@ namespace SheltonHTPC.NavigationContent.LayoutSections
                     if (_PreviewTask is object)
                         await _PreviewTask.ConfigureAwait(false);
 
-                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                    encoder.QualityLevel = 80;
-                    encoder.Frames.Add(BitmapFrame.Create(PreviewImage));
-                    using (MemoryStream previewStream = new MemoryStream())
+                    using (FileStream fs = new FileStream(path, FileMode.Open))
                     {
-                        encoder.Save(previewStream);
-                        previewStream.Seek(0, SeekOrigin.Begin);
-
-                        repo.Database.FileStorage.Upload(_FullImagePath, path, previewStream);
+                        repo.Database.FileStorage.Upload(_FullImagePath, path, fs);
                     }
                 }
             }
