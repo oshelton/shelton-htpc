@@ -17,9 +17,9 @@
     Height="520"
     MinWidth="800"
     MinHeight="520"
+    Closing="MetroWindow_Closing"
     Loaded="MetroWindow_Loaded"
     TitleCaps="False"
-    Unloaded="MetroWindow_Unloaded"
     mc:Ignorable="d">
 
     <controls:MetroWindow.Resources>
@@ -36,7 +36,7 @@
 
     <Grid>
         <DockPanel Name="ContentPanel" IsEnabled="{Binding Path=(utils:WorkManager.IsApplicationBlockingWorkInProgress), Converter={x:Static converters:CommonConverters.InvertBoolean}}">
-            <StackPanel DockPanel.Dock="Left">
+            <StackPanel DockPanel.Dock="Left" IsEnabled="{Binding CurrentContentModel.CanNavigateAway}">
                 <RadioButton
                     Name="GeneralSettingsButton"
                     Content="{iconPacks:FontAwesome HomeSolid,

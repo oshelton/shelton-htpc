@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using ReactiveUI;
 using SheltonHTPC.NavigationContent;
 using System;
@@ -28,8 +29,13 @@ namespace SheltonHTPC
             Model.ChangeContentTo(ContentKind.GeneralSettings);
         }
 
-        private void MetroWindow_Unloaded(object sender, RoutedEventArgs e)
+        private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (!Model.CurrentContentModel.CanNavigateAway)
+            {
+                e.Cancel = true;
+                await this.ShowMessageAsync("Unsaved Data Present", "There are unsaved changes in the application; you cannot close the application until you save or reset them.", MessageDialogStyle.Affirmative).ConfigureAwait(true);
+            }
         }
 
         public MainWindowViewModel Model { get; private set; }

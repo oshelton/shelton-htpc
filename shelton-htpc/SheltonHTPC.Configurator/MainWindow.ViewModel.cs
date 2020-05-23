@@ -58,11 +58,7 @@ namespace SheltonHTPC
             NavigationContentModelBase newContent = null;
             if (_NavigationContentModels.TryGetValue(kind, out newContent))
             {
-                if (CurrentContentModel != null && !CurrentContentModel.CanNavigateAway)
-                {
-                    //TODO Issue #29: Confirm, clean up, etc...
-                }
-                else
+                if (CurrentContentModel == null || CurrentContentModel.CanNavigateAway)
                     CurrentContentModel = newContent;
             }
             else
