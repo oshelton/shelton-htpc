@@ -10,7 +10,7 @@ namespace SheltonHTPC.Dtos.Layout
     /// <summary>
     /// Represents a single set of backround images for use with scenes.
     /// </summary>
-    public class BackgroundSetDto
+    public sealed class BackgroundSetDto
     {
         /// <summary>
         /// Name of the collection in its database file; use this when retrieving it from the repo.

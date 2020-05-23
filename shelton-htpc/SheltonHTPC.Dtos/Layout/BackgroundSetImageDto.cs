@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SheltonHTPC.Dtos.Layout
 {
-    public class BackgroundSetImageDto
+    public sealed class BackgroundSetImageDto
     {
         internal static void RegisterDtoMap(BsonMapper mapper)
         {
@@ -17,8 +17,6 @@ namespace SheltonHTPC.Dtos.Layout
                 .Field(x => x.HDImagePath, nameof(HDImagePath))
                 .Field(x => x.FullImagePath, nameof(FullImagePath));
         }
-
-
 
         /// <summary>
         /// Path to the original image file.  May be helpful.

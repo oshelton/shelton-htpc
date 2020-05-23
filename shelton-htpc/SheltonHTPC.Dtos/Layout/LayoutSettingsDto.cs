@@ -10,7 +10,7 @@ namespace SheltonHTPC.Dtos.Layout
     /// <summary>
     /// Class for holding layout settings that apply to all scenes.
     /// </summary>
-    public class LayoutSettingsDto
+    public sealed class LayoutSettingsDto
     {
         /// <summary>
         /// Name of the collection in its database file; use this when retrieving it from the repo.
